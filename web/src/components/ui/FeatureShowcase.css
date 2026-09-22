@@ -9,40 +9,40 @@
   gap: 2.2rem;
 }
 
-/* ── PieBurst Welcome Splash Hero ── */
-.pieburst-splash-hero {
+/* ── PieBurst Fullscreen Entry Screen ── */
+.pieburst-entry-screen {
   position: relative;
   width: 100%;
-  min-height: 80vh;
+  min-height: 82vh;
   border-radius: 24px;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 40%, rgba(30, 27, 75, 0.95) 0%, rgba(9, 9, 11, 0.98) 100%);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: radial-gradient(circle at 50% 50%, rgba(26, 23, 68, 0.95) 0%, rgba(9, 9, 11, 0.98) 100%);
+  border: 1px solid rgba(99, 102, 241, 0.35);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 4rem 1.5rem;
-  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  padding: 3rem 1.5rem;
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.7);
 }
 
 .pieburst-canvas-wrap {
   position: absolute;
   inset: 0;
-  opacity: 0.85;
+  opacity: 0.9;
   pointer-events: none;
   z-index: 1;
 }
 
-.pieburst-hero-overlay {
+.pieburst-entry-content {
   position: relative;
   z-index: 2;
-  max-width: 820px;
+  max-width: 760px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .pieburst-badge {
@@ -62,82 +62,44 @@
   box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
 }
 
-.pieburst-hero-overlay h1 {
+.pieburst-entry-content h1 {
   font-family: var(--serif);
   font-size: clamp(2.2rem, 5vw, 3.8rem);
   font-weight: 800;
-  line-height: 1.12;
+  line-height: 1.15;
   letter-spacing: -0.03em;
   color: #ffffff;
   margin: 0;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.9);
 }
 
-.pieburst-hero-overlay h1 .gradient-text {
+.pieburst-entry-content h1 .gradient-text {
   background: linear-gradient(135deg, #a5b4fc 0%, #c084fc 50%, #f472b6 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.pieburst-hero-overlay p {
-  font-size: clamp(1rem, 2vw, 1.2rem);
-  color: #cbd5e1;
-  max-width: 680px;
-  margin: 0;
-  line-height: 1.6;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-}
-
-.pieburst-cta-group {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .pieburst-get-started-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.95rem 2.2rem;
-  border-radius: 16px;
+  gap: 0.75rem;
+  padding: 1.1rem 2.6rem;
+  border-radius: 18px;
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
   color: #ffffff;
-  font-size: 1.05rem;
-  font-weight: 750;
+  font-size: 1.15rem;
+  font-weight: 800;
   border: none;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.45);
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.5);
   transition: all 250ms ease;
+  margin-top: 0.5rem;
 }
 
 .pieburst-get-started-btn:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 12px 35px rgba(99, 102, 241, 0.6);
-}
-
-.pieburst-explore-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.95rem 1.8rem;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #e2e8f0;
-  font-size: 0.95rem;
-  font-weight: 650;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  transition: all 200ms ease;
-}
-
-.pieburst-explore-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 40px rgba(99, 102, 241, 0.65);
 }
 
 /* ── Top Passport / Quick Auth Bar ── */

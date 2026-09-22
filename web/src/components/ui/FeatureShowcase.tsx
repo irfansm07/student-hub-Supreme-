@@ -161,6 +161,7 @@ const features: Feature[] = [
 ]
 
 export function FeatureShowcase() {
+    const [hasEntered, setHasEntered] = useState(false)
     const [activeFeature, setActiveFeature] = useState<FeatureId>('study')
     const { user, isAuthenticated, logout, openAuthModal, requireAuth } = useAuth()
     const navigate = useNavigate()
@@ -173,14 +174,37 @@ export function FeatureShowcase() {
         }
     }
 
-    const handleGetStarted = () => {
-        if (!isAuthenticated) {
-            openAuthModal()
-        }
-        const contentEl = document.getElementById('studio-content')
-        if (contentEl) {
-            contentEl.scrollIntoView({ behavior: 'smooth' })
-        }
+    if (!hasEntered) {
+        return (
+            <div className="feature-showcase">
+                <motion.div
+                    className="pieburst-entry-screen"
+                    initial={{ opacity: 0, scale: 0.97 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                >
+                    <div className="pieburst-canvas-wrap">
+                        <PieBurst speed={50} distance={18} />
+                    </div>
+                    <div className="pieburst-entry-content">
+                        <div className="pieburst-badge">
+                            <Sparkles size={14} /> Aurelia Student Hub 2.0
+                        </div>
+                        <h1>
+                            Supercharge Your Studies. Build Top Resumes. <span className="gradient-text">Land Your Dream Tech Job.</span>
+                        </h1>
+                        <button
+                            className="pieburst-get-started-btn"
+                            onClick={() => {
+                                setHasEntered(true)
+                            }}
+                        >
+                            <Rocket size={20} /> Get Started Now <ArrowRight size={20} />
+                        </button>
+                    </div>
+                </motion.div>
+            </div>
+        )
     }
 
     return (
@@ -214,44 +238,6 @@ export function FeatureShowcase() {
                     </div>
                 )}
             </div>
-
-            {/* 3D WebGL PieBurst Welcome Splash Screen */}
-            <motion.section
-                className="pieburst-splash-hero"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            >
-                <div className="pieburst-canvas-wrap">
-                    <PieBurst speed={45} distance={18} />
-                </div>
-
-                <div className="pieburst-hero-overlay">
-                    <div className="pieburst-badge">
-                        <Sparkles size={14} /> Aurelia Student Hub 2.0
-                    </div>
-                    <h1>
-                        Supercharge Your Studies. Build Top Resumes. <span className="gradient-text">Land Your Dream Tech Job.</span>
-                    </h1>
-                    <p>
-                        The intelligent studio designed specifically for university students. Learn what features we offer below, understand how they help you, and click Get Started to unlock full studio access.
-                    </p>
-                    <div className="pieburst-cta-group">
-                        <button className="pieburst-get-started-btn" onClick={handleGetStarted}>
-                            <Rocket size={18} /> Get Started Now <ArrowRight size={18} />
-                        </button>
-                        <button
-                            className="pieburst-explore-btn"
-                            onClick={() => {
-                                const contentEl = document.getElementById('studio-content')
-                                if (contentEl) contentEl.scrollIntoView({ behavior: 'smooth' })
-                            }}
-                        >
-                            Explore Features ↓
-                        </button>
-                    </div>
-                </div>
-            </motion.section>
 
             {/* Main Hype Hero Banner with WebGL Gradient Waves */}
             <motion.section
