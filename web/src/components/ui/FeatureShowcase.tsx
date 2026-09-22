@@ -176,34 +176,27 @@ export function FeatureShowcase() {
 
     if (!hasEntered) {
         return (
-            <div className="feature-showcase">
-                <motion.div
-                    className="pieburst-entry-screen"
-                    initial={{ opacity: 0, scale: 0.97 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                >
-                    <div className="pieburst-canvas-wrap">
-                        <PieBurst speed={50} distance={18} />
-                    </div>
-                    <div className="pieburst-entry-content">
-                        <div className="pieburst-badge">
-                            <Sparkles size={14} /> Aurelia Student Hub 2.0
-                        </div>
-                        <h1>
-                            Supercharge Your Studies. Build Top Resumes. <span className="gradient-text">Land Your Dream Tech Job.</span>
-                        </h1>
-                        <button
-                            className="pieburst-get-started-btn"
-                            onClick={() => {
-                                setHasEntered(true)
-                            }}
-                        >
-                            <Rocket size={20} /> Get Started Now <ArrowRight size={20} />
-                        </button>
-                    </div>
-                </motion.div>
-            </div>
+            <motion.div
+                className="pieburst-entry-screen"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+            >
+                <div className="pieburst-canvas-wrap">
+                    <PieBurst speed={50} distance={18} />
+                </div>
+                <div className="pieburst-entry-content">
+                    <button
+                        className="pieburst-get-started-btn"
+                        onClick={() => {
+                            setHasEntered(true)
+                        }}
+                    >
+                        <Rocket size={22} /> Get Started Now <ArrowRight size={22} />
+                    </button>
+                </div>
+            </motion.div>
         )
     }
 
