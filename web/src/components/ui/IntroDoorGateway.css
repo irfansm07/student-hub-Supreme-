@@ -1,0 +1,431 @@
+.gateway-container {
+    width: 100%;
+    min-height: 100vh;
+    background: #090d16;
+    color: #f8fafc;
+    font-family: inherit;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Top Floating Direct Access Bar */
+.gateway-top-bar {
+    position: sticky;
+    top: 1rem;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.6rem 1.25rem;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.vitian-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #818cf8;
+}
+
+.sparkle-icon {
+    color: #fbbf24;
+    animation: pulse-glow 2s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+.skip-door-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: white;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.skip-door-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+}
+
+/* Gateway Hero Section */
+.gateway-hero {
+    max-width: 900px;
+    margin: 4rem auto 2rem;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.gateway-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.3);
+    color: #a5b4fc;
+    font-size: 0.76rem;
+    font-weight: 750;
+    letter-spacing: 0.05em;
+}
+
+.gateway-title {
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0;
+}
+
+.vitian-gradient {
+    background: linear-gradient(135deg, #a855f7, #6366f1, #38bdf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.gateway-subtitle {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    max-width: 680px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.scroll-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
+    font-size: 0.84rem;
+    color: #64748b;
+}
+
+.bounce-arrow {
+    color: #818cf8;
+    animation: bounce 1.8s infinite ease-in-out;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(6px);
+    }
+}
+
+/* Doubt Questions Section */
+.doubt-section {
+    max-width: 1100px;
+    margin: 4rem auto 2rem;
+    padding: 0 1.5rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.doubt-label {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #f43f5e;
+    margin-bottom: 0.4rem;
+    display: block;
+}
+
+.section-header h2 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0;
+}
+
+.doubt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+}
+
+.doubt-card {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(244, 63, 94, 0.2);
+    border-radius: 20px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    transition: border-color 200ms ease, transform 200ms ease;
+}
+
+.doubt-card:hover {
+    border-color: rgba(244, 63, 94, 0.5);
+    transform: translateY(-3px);
+}
+
+.doubt-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(244, 63, 94, 0.12);
+    color: #f43f5e;
+    display: grid;
+    place-items: center;
+}
+
+.doubt-card h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 750;
+    color: #f1f5f9;
+}
+
+.doubt-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.55;
+}
+
+/* Reassurance Box */
+.reassurance-box {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(16, 185, 129, 0.12));
+    border: 1.5px solid rgba(99, 102, 241, 0.4);
+    border-radius: 24px;
+    padding: 2.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.reassurance-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+}
+
+.reassurance-box h2 {
+    font-size: 2rem;
+    font-weight: 850;
+    margin: 0;
+}
+
+.reassurance-box p {
+    max-width: 640px;
+    color: #cbd5e1;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.reassurance-arrow-prompt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #818cf8;
+    margin-top: 0.5rem;
+}
+
+.pulse-down {
+    animation: pulse-down 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-down {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(4px);
+    }
+}
+
+/* 3D Scroll Door Opening Viewport Container */
+.door-viewport-container {
+    position: relative;
+    height: 240vh;
+    width: 100%;
+}
+
+.door-sticky-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    perspective: 1400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #020617;
+}
+
+/* Portal Light Glow Flare */
+.door-portal-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.5) 0%, rgba(168, 85, 247, 0.3) 45%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Studio Revealed Container */
+.door-revealed-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    will-change: transform, opacity;
+}
+
+/* 3D Grand Door Wrapper */
+.door-3d-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    perspective: 1400px;
+}
+
+.door-panel {
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(145deg, #0b1120 0%, #1e1b4b 50%, #0f172a 100%);
+    border: 2px solid rgba(99, 102, 241, 0.4);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+    will-change: transform;
+}
+
+.door-left {
+    transform-origin: left center;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.door-right {
+    transform-origin: right center;
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.door-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    position: relative;
+}
+
+.door-crest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.crest-symbol {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 1.25rem;
+    color: white;
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.door-crest span {
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: #cbd5e1;
+}
+
+.door-handle {
+    width: 14px;
+    height: 60px;
+    border-radius: 7px;
+    background: linear-gradient(180deg, #e2e8f0, #94a3b8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.door-handle-left {
+    right: 16px;
+}
+
+.door-handle-right {
+    left: 16px;
+}
+
+.door-pattern {
+    position: absolute;
+    inset: 1.5rem;
+    border: 1px dashed rgba(99, 102, 241, 0.25);
+    border-radius: 12px;
+    pointer-events: none;
+}
