@@ -183,9 +183,23 @@ export function FeatureShowcase() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
             >
-                <div className="pieburst-canvas-wrap">
-                    <PieBurst speed={50} distance={18} />
+                {/* Hook Question header pointing down to central 3D animation */}
+                <div className="pieburst-question-header">
+                    <div className="pieburst-question-badge">
+                        <Sparkles size={14} /> ARE YOU FED UP WITH FRAGMENTED TOOLS?
+                    </div>
+                    <h1 className="pieburst-question-title">
+                        Are you fed up with using <span className="highlight-text">different tools</span> for different tasks?
+                    </h1>
+                    <p className="pieburst-question-sub">
+                        Stop juggling 10 separate apps for lecture notes, ATS resume building, and job searching. Aurelia unifies your entire student journey into one studio.
+                    </p>
                 </div>
+
+                <div className="pieburst-canvas-wrap">
+                    <PieBurst speed={50} distance={10.5} />
+                </div>
+
                 <div className="pieburst-entry-content">
                     <button
                         className="pieburst-get-started-btn"
