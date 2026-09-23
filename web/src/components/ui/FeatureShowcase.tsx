@@ -175,6 +175,15 @@ export function FeatureShowcase() {
     }
 
     if (!hasEntered) {
+        const sectorFeatures = [
+            { icon: BookOpen, label: 'Study Summarizer' },
+            { icon: FileSearch, label: 'Resume Analyzer' },
+            { icon: FileText, label: 'Resume Builder' },
+            { icon: Briefcase, label: 'Application Tracker' },
+            { icon: Search, label: 'Job Search' },
+            { icon: BarChart3, label: 'Career Dashboard' },
+        ]
+
         return (
             <motion.div
                 className="pieburst-entry-screen"
@@ -183,21 +192,32 @@ export function FeatureShowcase() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.4 }}
             >
-                {/* Hook Question header pointing down to central 3D animation */}
-                <div className="pieburst-question-header">
-                    <div className="pieburst-question-badge">
-                        <Sparkles size={14} /> ARE YOU FED UP WITH FRAGMENTED TOOLS?
-                    </div>
-                    <h1 className="pieburst-question-title">
-                        Are you fed up with using <span className="highlight-text">different tools</span> for different tasks?
-                    </h1>
-                    <p className="pieburst-question-sub">
-                        Stop juggling 10 separate apps for lecture notes, ATS resume building, and job searching. Aurelia unifies your entire student journey into one studio.
-                    </p>
-                </div>
-
                 <div className="pieburst-canvas-wrap">
                     <PieBurst speed={28} distance={10.5} />
+                </div>
+
+                {/* Feature labels orbiting around the 3D animation */}
+                <div className="pieburst-labels-ring">
+                    {sectorFeatures.map((feat, i) => {
+                        const Icon = feat.icon
+                        return (
+                            <div
+                                key={feat.label}
+                                className={`pieburst-sector-label sector-pos-${i}`}
+                                style={{ animationDelay: `${i * 0.15}s` }}
+                            >
+                                <div className="sector-label-icon">
+                                    <Icon size={18} />
+                                </div>
+                                <span className="sector-label-text">{feat.label}</span>
+                            </div>
+                        )
+                    })}
+
+                    {/* Central title that reveals when circle joins */}
+                    <div className="pieburst-center-title">
+                        <span className="center-title-text">Student Hub</span>
+                    </div>
                 </div>
 
                 <div className="pieburst-entry-content">
