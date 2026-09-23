@@ -197,7 +197,7 @@ export function FeatureShowcase() {
                 </div>
 
                 <div className="pieburst-canvas-wrap">
-                    <PieBurst speed={50} distance={10.5} />
+                    <PieBurst speed={28} distance={10.5} />
                 </div>
 
                 <div className="pieburst-entry-content">
