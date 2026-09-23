@@ -41,8 +41,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(680px, 85vw);
-  height: min(680px, 85vw);
+  width: min(460px, 75vw);
+  height: min(460px, 75vw);
   z-index: 5;
   pointer-events: none;
 }
@@ -51,10 +51,10 @@
   position: absolute;
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 0.5rem 1rem 0.5rem 0.65rem;
-  border-radius: 14px;
-  background: rgba(15, 14, 40, 0.75);
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.5rem;
+  border-radius: 12px;
+  background: rgba(15, 14, 40, 0.8);
   border: 1px solid rgba(99, 102, 241, 0.35);
   backdrop-filter: blur(12px);
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.15);
@@ -63,9 +63,9 @@
 }
 
 .sector-label-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,43 +75,43 @@
 }
 
 .sector-label-text {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: #e2e8f0;
   letter-spacing: -0.01em;
 }
 
-/* 6 sector label positions — placed around the circle */
+/* 6 sector label positions — tight around the pie */
 .sector-pos-0 {
-  top: 2%;
+  top: -8%;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .sector-pos-1 {
-  top: 18%;
-  right: 0;
+  top: 12%;
+  right: -5%;
 }
 
 .sector-pos-2 {
-  bottom: 18%;
-  right: 0;
+  bottom: 12%;
+  right: -5%;
 }
 
 .sector-pos-3 {
-  bottom: 2%;
+  bottom: -8%;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .sector-pos-4 {
-  bottom: 18%;
-  left: 0;
+  bottom: 12%;
+  left: -5%;
 }
 
 .sector-pos-5 {
-  top: 18%;
-  left: 0;
+  top: 12%;
+  left: -5%;
 }
 
 @keyframes labelFadeIn {
