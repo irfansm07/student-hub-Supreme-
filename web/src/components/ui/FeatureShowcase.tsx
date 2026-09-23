@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     BookOpen, FileSearch, Briefcase, ArrowRight, CheckCircle, Sparkles,
@@ -160,6 +160,89 @@ const features: Feature[] = [
     },
 ]
 
+const SECTOR_FEATURES = [
+    { icon: BookOpen, label: 'Study Summarizer' },
+    { icon: FileSearch, label: 'Resume Analyzer' },
+    { icon: FileText, label: 'Resume Builder' },
+    { icon: Briefcase, label: 'Application Tracker' },
+    { icon: Search, label: 'Job Search' },
+    { icon: BarChart3, label: 'Career Dashboard' },
+]
+
+function SplashScreen({ onEnter }: { onEnter: () => void }) {
+    const burstRef = useRef(0)
+    const labelsRef = useRef<HTMLDivElement>(null)
+    const titleRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        let raf = 0
+        const tick = () => {
+            raf = requestAnimationFrame(tick)
+            const amt = burstRef.current // 0 = circle closed, ~1 = max burst
+
+            // Labels visible & come close when burst > 0.1, fully visible at burst = 0.4+
+            const labelsOpacity = Math.max(0, Math.min(1, (amt - 0.08) * 3.5))
+            // Scale labels from 0.85 (tucked close) to 1.0 (at sector position)
+            const labelsScale = 0.85 + labelsOpacity * 0.15
+
+            // Title visible when burst < 0.25, fully visible at burst = 0
+            const titleOpacity = Math.max(0, Math.min(1, (0.3 - amt) * 4))
+            const titleScale = 0.8 + titleOpacity * 0.2
+
+            if (labelsRef.current) {
+                labelsRef.current.style.opacity = String(labelsOpacity)
+                labelsRef.current.style.transform = `translate(-50%, -50%) scale(${labelsScale})`
+                labelsRef.current.style.pointerEvents = labelsOpacity > 0.5 ? 'auto' : 'none'
+            }
+            if (titleRef.current) {
+                titleRef.current.style.opacity = String(titleOpacity)
+                titleRef.current.style.transform = `translate(-50%, -50%) scale(${titleScale})`
+            }
+        }
+        raf = requestAnimationFrame(tick)
+        return () => cancelAnimationFrame(raf)
+    }, [])
+
+    return (
+        <motion.div
+            className="pieburst-entry-screen"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+        >
+            <div className="pieburst-canvas-wrap">
+                <PieBurst speed={18} distance={10.5} burstRef={burstRef} />
+            </div>
+
+            {/* Feature labels — synced with burst animation */}
+            <div className="pieburst-labels-ring" ref={labelsRef}>
+                {SECTOR_FEATURES.map((feat, i) => {
+                    const Icon = feat.icon
+                    return (
+                        <div key={feat.label} className={`pieburst-sector-label sector-pos-${i}`}>
+                            <div className="sector-label-icon">
+                                <Icon size={16} />
+                            </div>
+                            <span className="sector-label-text">{feat.label}</span>
+                        </div>
+                    )
+                })}
+            </div>
+
+            {/* Central "Student Hub" — appears when circle is complete */}
+            <div className="pieburst-center-title" ref={titleRef}>
+                <span className="center-title-text">Student Hub</span>
+            </div>
+
+            <div className="pieburst-entry-content">
+                <button className="pieburst-get-started-btn" onClick={onEnter}>
+                    <Rocket size={22} /> Get Started Now <ArrowRight size={22} />
+                </button>
+            </div>
+        </motion.div>
+    )
+}
 export function FeatureShowcase() {
     const [hasEntered, setHasEntered] = useState(false)
     const [activeFeature, setActiveFeature] = useState<FeatureId>('study')
@@ -175,63 +258,7 @@ export function FeatureShowcase() {
     }
 
     if (!hasEntered) {
-        const sectorFeatures = [
-            { icon: BookOpen, label: 'Study Summarizer' },
-            { icon: FileSearch, label: 'Resume Analyzer' },
-            { icon: FileText, label: 'Resume Builder' },
-            { icon: Briefcase, label: 'Application Tracker' },
-            { icon: Search, label: 'Job Search' },
-            { icon: BarChart3, label: 'Career Dashboard' },
-        ]
-
-        return (
-            <motion.div
-                className="pieburst-entry-screen"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
-            >
-                <div className="pieburst-canvas-wrap">
-                    <PieBurst speed={28} distance={10.5} />
-                </div>
-
-                {/* Feature labels orbiting around the 3D animation */}
-                <div className="pieburst-labels-ring">
-                    {sectorFeatures.map((feat, i) => {
-                        const Icon = feat.icon
-                        return (
-                            <div
-                                key={feat.label}
-                                className={`pieburst-sector-label sector-pos-${i}`}
-                                style={{ animationDelay: `${i * 0.15}s` }}
-                            >
-                                <div className="sector-label-icon">
-                                    <Icon size={18} />
-                                </div>
-                                <span className="sector-label-text">{feat.label}</span>
-                            </div>
-                        )
-                    })}
-
-                    {/* Central title that reveals when circle joins */}
-                    <div className="pieburst-center-title">
-                        <span className="center-title-text">Student Hub</span>
-                    </div>
-                </div>
-
-                <div className="pieburst-entry-content">
-                    <button
-                        className="pieburst-get-started-btn"
-                        onClick={() => {
-                            setHasEntered(true)
-                        }}
-                    >
-                        <Rocket size={22} /> Get Started Now <ArrowRight size={22} />
-                    </button>
-                </div>
-            </motion.div>
-        )
+        return <SplashScreen onEnter={() => setHasEntered(true)} />
     }
 
     return (

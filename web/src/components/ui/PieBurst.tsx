@@ -389,6 +389,7 @@ interface Props {
     width?: number | string
     height?: number | string
     style?: React.CSSProperties
+    burstRef?: React.MutableRefObject<number>
 }
 
 function BasePieBurst(props: Props) {
@@ -400,6 +401,7 @@ function BasePieBurst(props: Props) {
         distance = 18,
         pie,
         style,
+        burstRef,
     } = props
 
     const hostRef = useRef<HTMLDivElement>(null)
@@ -530,6 +532,7 @@ function BasePieBurst(props: Props) {
             const amt = clock < T_BACK
                 ? easeOut1(Math.min(1, clock / T_OUT))
                 : HELD * (1 - easeOut1(Math.min(1, (clock - T_BACK) / T_OUT)))
+            if (burstRef) burstRef.current = amt
             const spin = Math.PI * easeOut1(Math.min(1, clock / T_SPIN))
 
             const cz = depth / 2
