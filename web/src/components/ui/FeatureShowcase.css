@@ -38,11 +38,11 @@
 /* ── Labels ring overlay ── */
 .pieburst-labels-ring {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: min(440px, 72vw);
-  height: min(440px, 72vw);
+  width: min(460px, 75vw);
+  height: min(460px, 75vw);
   z-index: 5;
   pointer-events: none;
 }
@@ -82,59 +82,66 @@
 
 /* 6 sector label positions — tight around the pie */
 .sector-pos-0 {
-  top: -6%;
+  top: -8%;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .sector-pos-1 {
-  top: 14%;
-  right: -10%;
+  top: 12%;
+  right: -8%;
 }
 
 .sector-pos-2 {
-  bottom: 14%;
-  right: -10%;
+  bottom: 12%;
+  right: -8%;
 }
 
 .sector-pos-3 {
-  bottom: -2%;
+  bottom: 4%;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .sector-pos-4 {
-  bottom: 14%;
-  left: -10%;
+  bottom: 12%;
+  left: -8%;
 }
 
 .sector-pos-5 {
-  top: 14%;
-  left: -10%;
+  top: 12%;
+  left: -8%;
 }
 
 /* ── Central "Student Hub" title — JS controls opacity/transform ── */
 .pieburst-center-title {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 8;
   pointer-events: none;
   transition: opacity 0.15s ease;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .center-title-text {
   font-family: 'Lobster', cursive;
-  font-size: clamp(2.2rem, 4.8vw, 3.6rem);
+  font-size: clamp(3.5rem, 8vw, 6.2rem);
   font-weight: 400;
-  letter-spacing: 0.01em;
-  background: linear-gradient(135deg, #a5b4fc 0%, #c084fc 40%, #f472b6 100%);
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg, #a5b4fc 0%, #c084fc 40%, #f472b6 80%, #fb7185 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: none;
-  filter: drop-shadow(0 0 25px rgba(165, 180, 252, 0.6));
+  filter: drop-shadow(0 0 35px rgba(165, 180, 252, 0.8)) drop-shadow(0 0 70px rgba(192, 132, 252, 0.5));
+  white-space: nowrap;
+  line-height: 1.1;
 }
 
 .pieburst-entry-content {
