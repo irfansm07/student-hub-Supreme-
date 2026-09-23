@@ -212,7 +212,13 @@ function SplashScreen({ onEnter }: { onEnter: () => void }) {
             transition={{ duration: 0.4 }}
         >
             <div className="pieburst-canvas-wrap">
-                <PieBurst speed={18} distance={10.5} burstRef={burstRef} />
+                <PieBurst
+                    speed={18}
+                    distance={10.5}
+                    burstRef={burstRef}
+                    baseColor="#22396F"
+                    accentColor="#FCF1D0"
+                />
             </div>
 
             {/* Feature labels — synced with burst animation */}
