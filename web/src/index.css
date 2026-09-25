@@ -1100,13 +1100,24 @@ textarea {
   display: none;
 }
 
+/* Prevent auto-zoom on iOS Safari when tapping inputs */
+@media (max-width: 768px) {
+
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Responsive Media Queries */
 @media (max-width: 1100px) {
 
   .hero,
   .grid-4,
   .grid-3,
   .grid-5 {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1117,30 +1128,55 @@ textarea {
 
   .sidebar {
     position: fixed;
-    z-index: 30;
+    inset: 0 auto 0 0;
+    z-index: 99;
     transform: translateX(-105%);
-    width: min(88vw, 320px);
-    transition: transform 220ms ease;
+    width: min(88vw, 300px);
+    height: 100svh;
+    padding-bottom: calc(1.2rem + env(safe-area-inset-bottom));
+    transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.25);
   }
 
   .sidebar.open {
-    transform: none;
+    transform: translateX(0);
+  }
+
+  .scrim {
+    z-index: 90;
   }
 
   .mobile-toggle {
     display: grid;
   }
 
+  .topbar {
+    padding: 0.75rem 1rem 0;
+    gap: 0.6rem;
+  }
+
   .search-chip {
     min-width: 0;
     flex: 1;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.84rem;
   }
 
   .search-chip kbd {
     display: none;
   }
 
-  .hero,
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+    border-radius: 24px;
+  }
+
+  .hero h2 {
+    max-width: 100%;
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+  }
+
   .grid-2,
   .grid-3,
   .grid-4,
@@ -1148,19 +1184,113 @@ textarea {
     grid-template-columns: 1fr;
   }
 
+  /* Kanban Board horizontal swipe container for mobile */
   .kanban {
-    grid-template-columns: 1fr;
+    display: flex;
+    gap: 0.8rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.8rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .kanban-col {
+    flex: 0 0 min(280px, 85vw);
+    scroll-snap-align: start;
+    min-height: 380px;
   }
 
   .page {
-    padding: 1rem;
+    padding: 1rem 0.85rem 2rem;
   }
 
   .preview {
     position: static;
+    min-height: auto;
+    padding: 1.25rem;
   }
 
   .crumb {
     display: none;
+  }
+
+  /* Guided Page Header Mobile */
+  .gph-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 1.15rem;
+  }
+
+  .gph-subtitle {
+    font-size: 0.84rem;
+  }
+
+  .gph-steps {
+    gap: 0.4rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.4rem 0;
+  }
+
+  .gph-step {
+    flex: 0 0 auto;
+    min-width: 140px;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .gph-step__line {
+    display: none;
+  }
+}
+
+@media (max-width: 580px) {
+
+  .grid-4,
+  .grid-5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat {
+    padding: 0.8rem 0.85rem;
+  }
+
+  .stat strong {
+    font-size: 1.35rem;
+  }
+
+  .stat em {
+    font-size: 0.75rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .toast-stack {
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .toast {
+    font-size: 0.84rem;
+  }
+
+  .tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    padding-bottom: 0.3rem;
+  }
+
+  .tab {
+    flex-shrink: 0;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.82rem;
   }
 }

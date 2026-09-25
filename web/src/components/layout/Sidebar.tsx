@@ -6,13 +6,15 @@ import { useAuth } from '../../context/AuthContext'
 
 const groups = ['Hub', 'Academic', 'Career'] as const
 
-export function Sidebar({ open }: { open: boolean }) {
+export function Sidebar({ open, onClose }: { open: boolean; onClose?: () => void }) {
   const { isAuthenticated, openAuthModal } = useAuth()
 
   const handleNavClick = (e: React.MouseEvent, path: string) => {
     if (path !== '/' && !isAuthenticated) {
       e.preventDefault()
       openAuthModal()
+    } else {
+      onClose?.()
     }
   }
 

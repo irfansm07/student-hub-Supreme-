@@ -258,3 +258,42 @@
     cursor: pointer;
     text-decoration: underline;
 }
+
+@media (max-width: 520px) {
+    .auth-overlay {
+        padding: 0.75rem;
+    }
+
+    .auth-modal {
+        padding: 1.25rem 1rem;
+        border-radius: 20px;
+        max-height: 92vh;
+        overflow-y: auto;
+    }
+
+    .auth-header h2 {
+        font-size: 1.35rem;
+    }
+
+    .auth-header p {
+        font-size: 0.8rem;
+    }
+
+    .auth-demo-box {
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+
+    .auth-demo-info strong {
+        font-size: 0.8rem;
+    }
+
+    .auth-demo-info span {
+        font-size: 0.74rem;
+    }
+
+    .demo-btn {
+        padding: 0.5rem;
+        font-size: 0.78rem;
+    }
+}

@@ -670,6 +670,7 @@
   line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -947,4 +948,131 @@
 .review-user span {
   font-size: 0.74rem;
   color: var(--ink-soft);
+}
+
+/* ── Mobile Responsive Overrides ── */
+@media (max-width: 680px) {
+  .pieburst-entry-screen {
+    padding-bottom: 2.5rem;
+  }
+
+  .pieburst-labels-ring {
+    width: min(320px, 85vw);
+    height: min(320px, 85vw);
+  }
+
+  .pieburst-sector-label {
+    padding: 0.3rem 0.6rem 0.3rem 0.35rem;
+    border-radius: 10px;
+  }
+
+  .sector-label-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .sector-label-text {
+    font-size: 0.7rem;
+  }
+
+  .center-title-text {
+    font-size: clamp(2.4rem, 8.5vw, 4rem);
+  }
+
+  .pieburst-get-started-btn {
+    padding: 0.9rem 1.8rem;
+    font-size: 1.05rem;
+    width: min(300px, 88vw);
+    justify-content: center;
+  }
+
+  .top-auth-bar {
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 0.4rem;
+  }
+
+  .auth-trigger-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 0.4rem;
+  }
+
+  .guest-status-pill,
+  .login-pill-btn {
+    font-size: 0.74rem;
+    padding: 0.35rem 0.75rem;
+  }
+
+  .showcase-hero-hype {
+    padding: 1.5rem 1rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .showcase-title-hype {
+    font-size: clamp(1.45rem, 5.2vw, 2rem);
+    max-width: 100%;
+  }
+
+  .showcase-subtitle-hype {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero-stats-strip {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.7rem;
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 16px;
+  }
+
+  .stat-pill {
+    padding: 0.2rem;
+  }
+
+  .stat-num {
+    font-size: 0.95rem;
+  }
+
+  .stat-lbl {
+    font-size: 0.68rem;
+  }
+
+  .stat-divider {
+    display: none;
+  }
+
+  .motive-card {
+    padding: 1.2rem;
+  }
+
+  .feature-detail-panel {
+    padding: 1.15rem;
+    border-radius: 18px;
+  }
+
+  .detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .detail-title-group h2 {
+    font-size: 1.25rem;
+  }
+
+  .launch-studio-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  .step-card {
+    padding: 0.75rem;
+    gap: 0.6rem;
+  }
 }

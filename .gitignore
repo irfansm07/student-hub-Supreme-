@@ -29,6 +29,10 @@ Thumbs.db
 
 # Logs
 *.log
+*.db
+install_log.txt
+Smart-AI-Resume-Analyzer/poppler/
+Smart-AI-Resume-Analyzer/poppler-*/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

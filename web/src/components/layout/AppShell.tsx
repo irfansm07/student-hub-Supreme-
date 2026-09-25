@@ -27,7 +27,7 @@ export function AppShell() {
 
   return (
     <div className="app-shell">
-      <Sidebar open={open} />
+      <Sidebar open={open} onClose={() => setOpen(false)} />
       {open ? <button className="scrim" onClick={() => setOpen(false)} aria-label="Close menu" /> : null}
       <div className="workspace">
         <Topbar onMenu={() => setOpen((v) => !v)} onSearch={() => setPalette(true)} />
