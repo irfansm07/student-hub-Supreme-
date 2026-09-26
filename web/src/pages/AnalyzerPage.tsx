@@ -87,16 +87,35 @@ export function AnalyzerPage() {
           <Card>
             <div className="grid grid-2">
               <Field label="Industry">
-                <select className="input" value={category} onChange={(e) => {
-                  setCategory(e.target.value)
-                  setRole(Object.keys(roles[e.target.value] || {})[0] || '')
-                }}>
-                  {Object.keys(roles).map((c) => <option key={c}>{c}</option>)}
+                <select
+                  className="input"
+                  value={category}
+                  onChange={(e) => {
+                    const newCat = e.target.value
+                    setCategory(newCat)
+                    setRole(Object.keys(roles[newCat] || {})[0] || '')
+                    setResult(null)
+                    setError('')
+                  }}
+                >
+                  {Object.keys(roles).map((c) => (
+                    <option key={c}>{c}</option>
+                  ))}
                 </select>
               </Field>
               <Field label="Role">
-                <select className="input" value={role} onChange={(e) => setRole(e.target.value)}>
-                  {roleNames.map((r) => <option key={r}>{r}</option>)}
+                <select
+                  className="input"
+                  value={role}
+                  onChange={(e) => {
+                    setRole(e.target.value)
+                    setResult(null)
+                    setError('')
+                  }}
+                >
+                  {roleNames.map((r) => (
+                    <option key={r}>{r}</option>
+                  ))}
                 </select>
               </Field>
             </div>
@@ -104,11 +123,34 @@ export function AnalyzerPage() {
             <div className="chip-row" style={{ margin: '0.8rem 0' }}>
               {roleInfo?.required_skills.map((s) => <span className="chip" key={s}>{s}</span>)}
             </div>
-            <Dropzone file={file} hint="Upload resume (PDF or DOCX)" accept=".pdf,.docx,.doc" onFile={setFile} />
-            {error ? <p style={{ color: 'var(--danger)' }}>{error}</p> : null}
-            <Button style={{ marginTop: '1rem' }} onClick={() => void run()} disabled={loading}>
-              {loading ? 'Analyzing…' : 'Run ATS analysis'}
-            </Button>
+            <Dropzone
+              file={file}
+              hint="Upload resume (PDF or DOCX)"
+              accept=".pdf,.docx,.doc"
+              onFile={(newFile) => {
+                setFile(newFile)
+                setResult(null)
+                setError('')
+              }}
+            />
+            {error ? <p style={{ color: 'var(--danger)', marginTop: '0.6rem' }}>{error}</p> : null}
+            <div style={{ display: 'flex', gap: '0.6rem', marginTop: '1rem' }}>
+              <Button onClick={() => void run()} disabled={loading}>
+                {loading ? 'Analyzing…' : result ? 'Re-run ATS Analysis' : 'Run ATS Analysis'}
+              </Button>
+              {result && (
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setFile(null)
+                    setResult(null)
+                    setError('')
+                  }}
+                >
+                  Upload Different Resume
+                </Button>
+              )}
+            </div>
           </Card>
         </FadeIn>
 
