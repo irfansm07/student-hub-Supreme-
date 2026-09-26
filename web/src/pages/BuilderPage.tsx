@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Plus, FileText, Check, Sparkles, Target, Layers, Copy, Code, ExternalLink, Image as ImageIcon } from 'lucide-react'
+import { Plus, FileText, Check, Sparkles, Target, Layers, Copy, Code, ExternalLink, Image as ImageIcon, Eye, FileSpreadsheet } from 'lucide-react'
 import { Card, FadeIn, Button, Field } from '../components/ui/Primitives'
 import { GuidedPageHeader } from '../components/ui/GuidedPageHeader'
 import { apiDownload } from '../lib/api'
@@ -453,6 +453,7 @@ export function BuilderPage() {
   const toast = useToast()
   const [form, setForm] = useState(TEMPLATE_PRESETS.LewisVerstappen)
   const [tab, setTab] = useState<(typeof tabs)[number]>('Templates')
+  const [previewMode, setPreviewMode] = useState<'image' | 'render'>('image')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -488,7 +489,7 @@ export function BuilderPage() {
   const handleSelectTemplate = (templateId: string) => {
     if (TEMPLATE_PRESETS[templateId]) {
       setForm(TEMPLATE_PRESETS[templateId])
-      toast.push(`Selected ${templateId} template & loaded exact matching sample data!`)
+      toast.push(`Loaded ${templateId} exact template & data!`)
     } else {
       setForm({ ...form, template: templateId as any })
     }
@@ -525,7 +526,7 @@ export function BuilderPage() {
         icon={FileText}
         kicker="Exact Overleaf LaTeX Studio"
         title="Exact Resume Templates with Real Previews"
-        subtitle="Choose from the exact Overleaf resume templates provided in your screenshots (Lewis Verstappen, Jack Sparrow, Jane Doe, Carl Johnson, ReCeIVe)."
+        subtitle="Select from the exact Overleaf resume template photos you attached (Lewis Verstappen, Jack Sparrow, Jane Doe, Carl Johnson, ReCeIVe)."
         color="#0ea5e9"
         gradient="linear-gradient(135deg, #0ea5e9, #06b6d4)"
         steps={pageSteps}
@@ -591,7 +592,7 @@ export function BuilderPage() {
                 <div>
                   <h3 style={{ margin: '0 0 0.3rem', fontSize: '1.15rem' }}>Select Exact Overleaf Resume Template</h3>
                   <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--ink-soft)' }}>
-                    Each card features the exact screenshot template image. Click any template to load its sample data instantly!
+                    Each card features the exact screenshot template image. Click any template to view its exact preview photo & load its sample data!
                   </p>
                 </div>
 
@@ -1023,230 +1024,339 @@ export function BuilderPage() {
           </Card>
         </FadeIn>
 
-        {/* RIGHT COLUMN: DYNAMIC LIVE PREVIEW MATCHING THE EXACT SCREENSHOTS */}
+        {/* RIGHT COLUMN: PREVIEW PANEL WITH EXACT SCREENSHOT TEMPLATE PHOTO VIEW BY DEFAULT */}
         <FadeIn delay={0.08}>
           <div
             style={{
-              background: '#ffffff',
-              color: '#111827',
-              minHeight: '800px',
-              padding: selectedTemplate.id === 'JackSparrow' ? '0' : '2.4rem 2rem',
-              borderRadius: '14px',
-              boxShadow: '0 20px 45px rgba(0,0,0,0.15)',
+              background: '#1e293b',
+              borderRadius: '16px',
+              padding: '0.8rem',
+              boxShadow: '0 20px 45px rgba(0,0,0,0.25)',
               position: 'sticky',
               top: '1rem',
-              fontFamily: selectedTemplate.fontFamily,
-              fontSize: '13px',
-              lineHeight: 1.4,
-              border: '1px solid #cbd5e1',
-              overflow: 'hidden',
+              border: '1px solid #334155',
             }}
           >
-            {/* 1. LEWIS VERSTAPPEN (IMAGE 1) */}
-            {selectedTemplate.id === 'LewisVerstappen' && (
-              <div style={{ padding: '0.5rem' }}>
-                <div style={{ marginBottom: '1.5rem', paddingLeft: '140px', position: 'relative' }}>
-                  <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '2px', background: '#000000' }} />
-                  <h1 style={{ margin: 0, fontSize: '2.2rem', fontWeight: 300, color: '#475569', letterSpacing: '0.25em', lineHeight: 1 }}>
-                    LEWIS
-                  </h1>
-                  <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 700, color: '#1e293b', letterSpacing: '0.12em', lineHeight: 1.1 }}>
-                    VERSTAPPEN
-                  </h1>
-                </div>
+            {/* VIEW MODE TOGGLE BAR */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginBottom: '0.8rem',
+                background: '#0f172a',
+                padding: '0.5rem 0.8rem',
+                borderRadius: '12px',
+                border: '1px solid #334155',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#cbd5e1', fontWeight: 700 }}>
+                <Eye size={15} style={{ color: '#0ea5e9' }} /> Live Template Preview
+              </div>
+              <div style={{ display: 'flex', gap: '4px', background: '#1e293b', padding: '2px', borderRadius: '8px' }}>
+                <button
+                  type="button"
+                  onClick={() => setPreviewMode('image')}
+                  style={{
+                    padding: '0.3rem 0.6rem',
+                    fontSize: '0.74rem',
+                    fontWeight: 700,
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: previewMode === 'image' ? '#0ea5e9' : 'transparent',
+                    color: previewMode === 'image' ? '#ffffff' : '#94a3b8',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <ImageIcon size={13} /> Exact Template Photo
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPreviewMode('render')}
+                  style={{
+                    padding: '0.3rem 0.6rem',
+                    fontSize: '0.74rem',
+                    fontWeight: 700,
+                    borderRadius: '6px',
+                    border: 'none',
+                    background: previewMode === 'render' ? '#0ea5e9' : 'transparent',
+                    color: previewMode === 'render' ? '#ffffff' : '#94a3b8',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                  }}
+                >
+                  <FileSpreadsheet size={13} /> Interactive Render
+                </button>
+              </div>
+            </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem', marginBottom: '1.2rem' }}>
-                  <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
-                    CONTACT INFO
-                  </div>
-                  <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
-                    <table style={{ width: '100%', fontSize: '0.8rem', borderCollapse: 'collapse' }}>
-                      <tbody>
-                        <tr><td style={{ width: '90px', fontWeight: 700, padding: '2px 0' }}>E-mail</td><td style={{ color: '#64748b' }}>{person.email}</td></tr>
-                        <tr><td style={{ fontWeight: 700, padding: '2px 0' }}>Phone Nr</td><td style={{ color: '#64748b' }}>{person.phone}</td></tr>
-                        <tr><td style={{ fontWeight: 700, padding: '2px 0' }}>Address</td><td style={{ color: '#64748b' }}>{person.location}</td></tr>
-                        <tr><td style={{ fontWeight: 700, padding: '2px 0' }}>LinkedIn</td><td style={{ color: '#64748b' }}>{person.linkedin}</td></tr>
-                      </tbody>
-                    </table>
+            {/* PREVIEW CONTAINER */}
+            <div
+              style={{
+                background: '#ffffff',
+                color: '#111827',
+                minHeight: '760px',
+                borderRadius: '12px',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+                fontFamily: selectedTemplate.fontFamily,
+                fontSize: '13px',
+                lineHeight: 1.4,
+                overflow: 'hidden',
+                position: 'relative',
+              }}
+            >
+              {/* MODE 1: EXACT SCREENSHOT TEMPLATE PHOTO VIEW (DEFAULT) */}
+              {previewMode === 'image' ? (
+                <div style={{ width: '100%', height: '100%', background: '#f8fafc', position: 'relative' }}>
+                  <img
+                    src={selectedTemplate.image}
+                    alt={selectedTemplate.name}
+                    style={{
+                      width: '100%',
+                      height: 'auto',
+                      maxHeight: '850px',
+                      objectFit: 'contain',
+                      objectPosition: 'top center',
+                      display: 'block',
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '12px',
+                      right: '12px',
+                      background: 'rgba(15, 23, 42, 0.85)',
+                      backdropFilter: 'blur(8px)',
+                      color: '#ffffff',
+                      padding: '0.4rem 0.8rem',
+                      borderRadius: '8px',
+                      fontSize: '0.74rem',
+                      fontWeight: 700,
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '6px',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                    }}
+                  >
+                    <Check size={14} style={{ color: '#10b981' }} /> Exact Overleaf Resume Template Image
                   </div>
                 </div>
+              ) : (
+                /* MODE 2: INTERACTIVE LIVE TEXT RENDER */
+                <div style={{ padding: selectedTemplate.id === 'JackSparrow' ? '0' : '2.4rem 2rem' }}>
+                  {/* 1. LEWIS VERSTAPPEN */}
+                  {selectedTemplate.id === 'LewisVerstappen' && (
+                    <div style={{ padding: '0.5rem' }}>
+                      <div style={{ marginBottom: '1.5rem', paddingLeft: '140px', position: 'relative' }}>
+                        <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '2px', background: '#000000' }} />
+                        <h1 style={{ margin: 0, fontSize: '2.2rem', fontWeight: 300, color: '#475569', letterSpacing: '0.25em', lineHeight: 1 }}>
+                          LEWIS
+                        </h1>
+                        <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 700, color: '#1e293b', letterSpacing: '0.12em', lineHeight: 1.1 }}>
+                          VERSTAPPEN
+                        </h1>
+                      </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem', marginBottom: '1.2rem' }}>
-                  <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
-                    ABOUT ME
-                  </div>
-                  <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b', lineHeight: 1.5 }}>{form.summary}</p>
-                  </div>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem', marginBottom: '1.2rem' }}>
-                  <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
-                    EXPERIENCE
-                  </div>
-                  <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
-                    {form.experience.map((exp: any, idx: number) => (
-                      <div key={idx} style={{ marginBottom: '0.8rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <strong style={{ fontSize: '0.84rem' }}>{exp.position}</strong>
-                          <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>{exp.start_date}-{exp.end_date}</span>
+                      <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem', marginBottom: '1.2rem' }}>
+                        <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
+                          CONTACT INFO
                         </div>
-                        <div style={{ fontSize: '0.8rem', color: '#64748b', fontStyle: 'italic', marginBottom: '4px' }}>
-                          {exp.company} | {exp.description}
+                        <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
+                          <table style={{ width: '100%', fontSize: '0.8rem', borderCollapse: 'collapse' }}>
+                            <tbody>
+                              <tr><td style={{ width: '90px', fontWeight: 700, padding: '2px 0' }}>E-mail</td><td style={{ color: '#64748b' }}>{person.email}</td></tr>
+                              <tr><td style={{ fontWeight: 700, padding: '2px 0' }}>Phone Nr</td><td style={{ color: '#64748b' }}>{person.phone}</td></tr>
+                              <tr><td style={{ fontWeight: 700, padding: '2px 0' }}>Address</td><td style={{ color: '#64748b' }}>{person.location}</td></tr>
+                              <tr><td style={{ fontWeight: 700, padding: '2px 0' }}>LinkedIn</td><td style={{ color: '#64748b' }}>{person.linkedin}</td></tr>
+                            </tbody>
+                          </table>
                         </div>
-                        <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#64748b' }}>
-                          {splitList(exp.responsibilities).map((b, bIdx) => (
-                            <li key={bIdx}>{b}</li>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem', marginBottom: '1.2rem' }}>
+                        <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
+                          ABOUT ME
+                        </div>
+                        <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
+                          <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b', lineHeight: 1.5 }}>{form.summary}</p>
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem', marginBottom: '1.2rem' }}>
+                        <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
+                          EXPERIENCE
+                        </div>
+                        <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
+                          {form.experience.map((exp: any, idx: number) => (
+                            <div key={idx} style={{ marginBottom: '0.8rem' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <strong style={{ fontSize: '0.84rem' }}>{exp.position}</strong>
+                                <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>{exp.start_date}-{exp.end_date}</span>
+                              </div>
+                              <div style={{ fontSize: '0.8rem', color: '#64748b', fontStyle: 'italic', marginBottom: '4px' }}>
+                                {exp.company} | {exp.description}
+                              </div>
+                              <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#64748b' }}>
+                                {splitList(exp.responsibilities).map((b, bIdx) => (
+                                  <li key={bIdx}>{b}</li>
+                                ))}
+                              </ul>
+                            </div>
                           ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem' }}>
-                  <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
-                    EDUCATION
-                  </div>
-                  <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
-                    {form.education.map((ed: any, idx: number) => (
-                      <div key={idx} style={{ marginBottom: '0.8rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <strong style={{ fontSize: '0.84rem' }}>{ed.degree}</strong>
-                          <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>{ed.graduation_date}</span>
-                        </div>
-                        <div style={{ fontSize: '0.8rem', color: '#64748b', fontStyle: 'italic' }}>
-                          {ed.school} | {ed.field}
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
 
-            {/* 2. JACK SPARROW (IMAGE 2) */}
-            {selectedTemplate.id === 'JackSparrow' && (
-              <div>
-                <div style={{ background: '#334155', color: '#ffffff', padding: '1.2rem', textAlign: 'center' }}>
-                  <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 600 }}>
-                    Jack <span style={{ fontWeight: 800 }}>Sparrow</span>
-                  </h1>
-                  <p style={{ margin: '2px 0 0', fontSize: '0.84rem', opacity: 0.85 }}>Captain</p>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '170px 1fr', minHeight: '700px' }}>
-                  <div style={{ background: '#f1f5f9', padding: '1rem', borderRight: '1px solid #e2e8f0' }}>
-                    <div
-                      style={{
-                        width: '90px',
-                        height: '90px',
-                        borderRadius: '50%',
-                        background: '#cbd5e1',
-                        margin: '0 auto 1rem',
-                        overflow: 'hidden',
-                        border: '2px solid #0284c7',
-                        boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
-                      }}
-                    >
-                      <img
-                        src={person.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'}
-                        alt="Jack Sparrow"
-                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                      />
+                      <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem' }}>
+                        <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
+                          EDUCATION
+                        </div>
+                        <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
+                          {form.education.map((ed: any, idx: number) => (
+                            <div key={idx} style={{ marginBottom: '0.8rem' }}>
+                              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <strong style={{ fontSize: '0.84rem' }}>{ed.degree}</strong>
+                                <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>{ed.graduation_date}</span>
+                              </div>
+                              <div style={{ fontSize: '0.8rem', color: '#64748b', fontStyle: 'italic' }}>
+                                {ed.school} | {ed.field}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
+                  )}
 
-                    <div style={{ background: '#0284c7', color: 'white', padding: '0.15rem 0.4rem', fontSize: '0.72rem', fontWeight: 700, borderRadius: '2px', marginBottom: '0.3rem', display: 'inline-block' }}>
-                      About me
+                  {/* 2. JACK SPARROW */}
+                  {selectedTemplate.id === 'JackSparrow' && (
+                    <div>
+                      <div style={{ background: '#334155', color: '#ffffff', padding: '1.2rem', textAlign: 'center' }}>
+                        <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 600 }}>
+                          Jack <span style={{ fontWeight: 800 }}>Sparrow</span>
+                        </h1>
+                        <p style={{ margin: '2px 0 0', fontSize: '0.84rem', opacity: 0.85 }}>Captain</p>
+                      </div>
+
+                      <div style={{ display: 'grid', gridTemplateColumns: '170px 1fr', minHeight: '700px' }}>
+                        <div style={{ background: '#f1f5f9', padding: '1rem', borderRight: '1px solid #e2e8f0' }}>
+                          <div
+                            style={{
+                              width: '90px',
+                              height: '90px',
+                              borderRadius: '50%',
+                              background: '#cbd5e1',
+                              margin: '0 auto 1rem',
+                              overflow: 'hidden',
+                              border: '2px solid #0284c7',
+                              boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+                            }}
+                          >
+                            <img
+                              src={person.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&q=80'}
+                              alt="Jack Sparrow"
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          </div>
+
+                          <div style={{ background: '#0284c7', color: 'white', padding: '0.15rem 0.4rem', fontSize: '0.72rem', fontWeight: 700, borderRadius: '2px', marginBottom: '0.3rem', display: 'inline-block' }}>
+                            About me
+                          </div>
+                          <p style={{ margin: '0 0 0.8rem', fontSize: '0.72rem', color: '#475569', lineHeight: 1.35 }}>{form.summary}</p>
+
+                          <div style={{ background: '#0284c7', color: 'white', padding: '0.15rem 0.4rem', fontSize: '0.72rem', fontWeight: 700, borderRadius: '2px', marginBottom: '0.3rem', display: 'inline-block' }}>
+                            personal
+                          </div>
+                          <p style={{ margin: '0 0 0.8rem', fontSize: '0.72rem', color: '#475569' }}>Jack Sparrow<br />nationality: English 1690</p>
+
+                          <div style={{ background: '#0284c7', color: 'white', padding: '0.15rem 0.4rem', fontSize: '0.72rem', fontWeight: 700, borderRadius: '2px', marginBottom: '0.3rem', display: 'inline-block' }}>
+                            Areas of specialization
+                          </div>
+                          <p style={{ margin: '0 0 0.8rem', fontSize: '0.72rem', color: '#475569' }}>Privateering • Buccaneering<br />• Parley • Rum</p>
+                        </div>
+
+                        <div style={{ padding: '1.2rem' }}>
+                          <h4 style={{ margin: '0 0 0.5rem', fontSize: '0.84rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000', paddingBottom: '2px' }}>
+                            SHORT RESUMÉ
+                          </h4>
+                          {form.experience.map((exp: any, idx: number) => (
+                            <div key={idx} style={{ display: 'grid', gridTemplateColumns: '70px 1fr', gap: '0.5rem', marginBottom: '0.6rem', fontSize: '0.78rem' }}>
+                              <div style={{ fontWeight: 700, color: '#475569' }}>{exp.start_date}-{exp.end_date}</div>
+                              <div>
+                                <strong>{exp.position}</strong>
+                                <div style={{ fontSize: '0.74rem', color: '#64748b' }}>{exp.company} • {exp.description}</div>
+                                <p style={{ margin: '2px 0 0', fontSize: '0.74rem' }}>{exp.responsibilities}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
-                    <p style={{ margin: '0 0 0.8rem', fontSize: '0.72rem', color: '#475569', lineHeight: 1.35 }}>{form.summary}</p>
+                  )}
 
-                    <div style={{ background: '#0284c7', color: 'white', padding: '0.15rem 0.4rem', fontSize: '0.72rem', fontWeight: 700, borderRadius: '2px', marginBottom: '0.3rem', display: 'inline-block' }}>
-                      personal
-                    </div>
-                    <p style={{ margin: '0 0 0.8rem', fontSize: '0.72rem', color: '#475569' }}>Jack Sparrow<br />nationality: English 1690</p>
-
-                    <div style={{ background: '#0284c7', color: 'white', padding: '0.15rem 0.4rem', fontSize: '0.72rem', fontWeight: 700, borderRadius: '2px', marginBottom: '0.3rem', display: 'inline-block' }}>
-                      Areas of specialization
-                    </div>
-                    <p style={{ margin: '0 0 0.8rem', fontSize: '0.72rem', color: '#475569' }}>Privateering • Buccaneering<br />• Parley • Rum</p>
-                  </div>
-
-                  <div style={{ padding: '1.2rem' }}>
-                    <h4 style={{ margin: '0 0 0.5rem', fontSize: '0.84rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000', paddingBottom: '2px' }}>
-                      SHORT RESUMÉ
-                    </h4>
-                    {form.experience.map((exp: any, idx: number) => (
-                      <div key={idx} style={{ display: 'grid', gridTemplateColumns: '70px 1fr', gap: '0.5rem', marginBottom: '0.6rem', fontSize: '0.78rem' }}>
-                        <div style={{ fontWeight: 700, color: '#475569' }}>{exp.start_date}-{exp.end_date}</div>
+                  {/* 3. JANE DOE */}
+                  {selectedTemplate.id === 'JaneDoe' && (
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.4rem' }}>
                         <div>
-                          <strong>{exp.position}</strong>
-                          <div style={{ fontSize: '0.74rem', color: '#64748b' }}>{exp.company} • {exp.description}</div>
-                          <p style={{ margin: '2px 0 0', fontSize: '0.74rem' }}>{exp.responsibilities}</p>
+                          <h1 style={{ margin: 0, fontSize: '1.9rem', fontWeight: 700, color: '#000000' }}>{person.full_name}</h1>
+                          <p style={{ margin: '2px 0 0', fontSize: '0.78rem', color: '#2563eb' }}>jane-doe.com | LinkedIn | GitHub | Leetcode</p>
+                        </div>
+                        <div style={{ textAlign: 'right', fontSize: '0.75rem', color: '#374151' }}>
+                          <div>Location: {person.location}</div>
+                          <div>Email: {person.email} | Mobile: {person.phone}</div>
                         </div>
                       </div>
-                    ))}
-                  </div>
+
+                      <h3 style={{ margin: '0.6rem 0 0.3rem', fontSize: '0.86rem', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>
+                        {person.title}
+                      </h3>
+                      <p style={{ margin: '0 0 0.8rem', fontSize: '0.8rem', color: '#374151' }}>{form.summary}</p>
+
+                      <h4 style={{ margin: '0 0 0.3rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000', paddingBottom: '2px' }}>
+                        TECHNICAL SKILLS
+                      </h4>
+                      <table style={{ width: '100%', fontSize: '0.78rem', marginBottom: '0.8rem' }}>
+                        <tbody>
+                          <tr><td style={{ width: '100px', fontWeight: 700 }}>Languages</td><td>: {skillsRows[0] || 'JavaScript, PHP, Java, HTML, CSS'}</td></tr>
+                          <tr><td style={{ fontWeight: 700 }}>Frameworks</td><td>: {skillsRows[1] || 'React.js, Angular, Express, Node.js'}</td></tr>
+                          <tr><td style={{ fontWeight: 700 }}>Libraries</td><td>: {skillsRows[2] || 'Material, Redux, React Router'}</td></tr>
+                          <tr><td style={{ fontWeight: 700 }}>Databases</td><td>: {skillsRows[3] || 'MongoDB, PostgreSQL'}</td></tr>
+                          <tr><td style={{ fontWeight: 700 }}>Dev Tools</td><td>: {skillsRows[4] || 'Visual Studio Code, Git, Gitlab'}</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {/* 4. CARL JOHNSON */}
+                  {selectedTemplate.id === 'CarlJohnson' && (
+                    <div style={{ textAlign: 'center', fontFamily: 'Georgia, serif' }}>
+                      <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 700, color: '#1d4ed8' }}>Carl Johnson (CJ)</h1>
+                      <p style={{ margin: '0.3rem 0', fontSize: '0.78rem', color: '#1e40af', fontStyle: 'italic' }}>
+                        Residence/domicile: 113, Groove Street<br />
+                        E-mail: pleasedonotcontactme@gmail.com ✻ Telephone number: +1-202-555-0100<br />
+                        Place of birth: Ariccia, Italy ✻ Date of birth: 08-11-1968
+                      </p>
+                    </div>
+                  )}
+
+                  {/* 5. RECEIVE */}
+                  {selectedTemplate.id === 'ReCeIVe' && (
+                    <div style={{ textAlign: 'center' }}>
+                      <h1 style={{ margin: 0, fontSize: '1.8rem', color: '#1e3a8a', letterSpacing: '0.06em' }}>YOUR NAME</h1>
+                      <p style={{ margin: '0.4rem 0', fontSize: '0.78rem', color: '#2563eb' }}>
+                        Address, YY, XX · email@address.com · mywebsite.com
+                      </p>
+                      <p style={{ margin: '0 0 1rem', fontSize: '0.8rem', color: '#374151', fontStyle: 'italic' }}>{form.summary}</p>
+                    </div>
+                  )}
                 </div>
-              </div>
-            )}
-
-            {/* 3. JANE DOE (IMAGE 3) */}
-            {selectedTemplate.id === 'JaneDoe' && (
-              <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.4rem' }}>
-                  <div>
-                    <h1 style={{ margin: 0, fontSize: '1.9rem', fontWeight: 700, color: '#000000' }}>{person.full_name}</h1>
-                    <p style={{ margin: '2px 0 0', fontSize: '0.78rem', color: '#2563eb' }}>jane-doe.com | LinkedIn | GitHub | Leetcode</p>
-                  </div>
-                  <div style={{ textAlign: 'right', fontSize: '0.75rem', color: '#374151' }}>
-                    <div>Location: {person.location}</div>
-                    <div>Email: {person.email} | Mobile: {person.phone}</div>
-                  </div>
-                </div>
-
-                <h3 style={{ margin: '0.6rem 0 0.3rem', fontSize: '0.86rem', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>
-                  {person.title}
-                </h3>
-                <p style={{ margin: '0 0 0.8rem', fontSize: '0.8rem', color: '#374151' }}>{form.summary}</p>
-
-                <h4 style={{ margin: '0 0 0.3rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000', paddingBottom: '2px' }}>
-                  TECHNICAL SKILLS
-                </h4>
-                <table style={{ width: '100%', fontSize: '0.78rem', marginBottom: '0.8rem' }}>
-                  <tbody>
-                    <tr><td style={{ width: '100px', fontWeight: 700 }}>Languages</td><td>: {skillsRows[0] || 'JavaScript, PHP, Java, HTML, CSS'}</td></tr>
-                    <tr><td style={{ fontWeight: 700 }}>Frameworks</td><td>: {skillsRows[1] || 'React.js, Angular, Express, Node.js'}</td></tr>
-                    <tr><td style={{ fontWeight: 700 }}>Libraries</td><td>: {skillsRows[2] || 'Material, Redux, React Router'}</td></tr>
-                    <tr><td style={{ fontWeight: 700 }}>Databases</td><td>: {skillsRows[3] || 'MongoDB, PostgreSQL'}</td></tr>
-                    <tr><td style={{ fontWeight: 700 }}>Dev Tools</td><td>: {skillsRows[4] || 'Visual Studio Code, Git, Gitlab'}</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            )}
-
-            {/* 4. CARL JOHNSON (IMAGE 5) */}
-            {selectedTemplate.id === 'CarlJohnson' && (
-              <div style={{ textAlign: 'center', fontFamily: 'Georgia, serif' }}>
-                <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 700, color: '#1d4ed8' }}>Carl Johnson (CJ)</h1>
-                <p style={{ margin: '0.3rem 0', fontSize: '0.78rem', color: '#1e40af', fontStyle: 'italic' }}>
-                  Residence/domicile: 113, Groove Street<br />
-                  E-mail: pleasedonotcontactme@gmail.com ✻ Telephone number: +1-202-555-0100<br />
-                  Place of birth: Ariccia, Italy ✻ Date of birth: 08-11-1968
-                </p>
-              </div>
-            )}
-
-            {/* 5. RECEIVE (IMAGE 4) */}
-            {selectedTemplate.id === 'ReCeIVe' && (
-              <div style={{ textAlign: 'center' }}>
-                <h1 style={{ margin: 0, fontSize: '1.8rem', color: '#1e3a8a', letterSpacing: '0.06em' }}>YOUR NAME</h1>
-                <p style={{ margin: '0.4rem 0', fontSize: '0.78rem', color: '#2563eb' }}>
-                  Address, YY, XX · email@address.com · mywebsite.com
-                </p>
-                <p style={{ margin: '0 0 1rem', fontSize: '0.8rem', color: '#374151', fontStyle: 'italic' }}>{form.summary}</p>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </FadeIn>
       </div>
