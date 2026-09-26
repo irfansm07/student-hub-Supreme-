@@ -235,14 +235,14 @@ function getFallbackAnalyzeResponse(category: string, roleName: string, fileName
   const missing = required.slice(Math.ceil(required.length * 0.6))
 
   return {
-    ats_score: 75,
+    ats_score: 88,
     document_type: fileName?.endsWith('.docx') ? 'Word DOCX' : 'PDF Document',
     keyword_match: {
-      score: 70,
+      score: 85,
       found_skills: found,
       missing_skills: missing,
     },
-    format_score: 85,
+    format_score: 92,
     suggestions: [
       `Add missing target skills: ${missing.join(', ') || 'TypeScript'} to increase match rate.`,
       'Include quantifiable metrics in experience bullet points.',
@@ -252,10 +252,10 @@ function getFallbackAnalyzeResponse(category: string, roleName: string, fileName
     target_category: category || 'Software Engineering',
     filename: fileName || 'Resume.pdf',
     section_scores: {
-      contact_info: 90,
-      work_experience: 80,
-      education: 85,
-      skills_section: 70,
+      contact_info: 95,
+      work_experience: 88,
+      education: 90,
+      skills_section: 85,
     },
   }
 }
@@ -359,7 +359,7 @@ export async function apiForm<T>(path: string, form: FormData): Promise<T> {
   throw new Error(`Upload failed for ${path}`)
 }
 
-export async function apiDownload(path: string, body: unknown, fallbackName: string) {
+export async function apiDownload(path: string, body: any, fallbackName: string) {
   try {
     const res = await fetch(`${API_BASE}${path}`, {
       method: 'POST',
@@ -380,13 +380,91 @@ export async function apiDownload(path: string, body: unknown, fallbackName: str
     // API server unavailable, fall back to client-side document export
   }
 
-  // Client-side document generation fallback
-  const content = `STUDENT HUB RESUME EXPORT\n========================\n\n${JSON.stringify(body, null, 2)}`
+  // Client-side template-aware document export fallback
+  const template = body.template || 'Modern'
+  const p = body.personal_info || {}
+
+  let docLines: string[] = []
+  docLines.push(`================================================================`)
+  docLines.push(`TEMPLATE: ${template.toUpperCase()} (ATS OPTIMIZED)`)
+  docLines.push(`================================================================\n`)
+  docLines.push(`${(p.full_name || 'STUDENT NAME').toUpperCase()}`)
+  if (p.title) docLines.push(`${p.title}`)
+
+  const contacts = [p.email, p.phone, p.location, p.linkedin, p.portfolio].filter(Boolean)
+  if (contacts.length) docLines.push(contacts.join('  |  '))
+  docLines.push('\n----------------------------------------------------------------')
+
+  if (body.summary) {
+    docLines.push('PROFESSIONAL SUMMARY')
+    docLines.push('----------------------------------------------------------------')
+    docLines.push(body.summary)
+    docLines.push('')
+  }
+
+  if (body.experience && body.experience.length) {
+    docLines.push('WORK EXPERIENCE')
+    docLines.push('----------------------------------------------------------------')
+    body.experience.forEach((exp: any) => {
+      if (exp.position || exp.company) {
+        docLines.push(`${exp.position || 'Role'} at ${exp.company || 'Company'} (${exp.start_date || ''} - ${exp.end_date || ''})`)
+        if (exp.description) docLines.push(`  ${exp.description}`)
+        if (Array.isArray(exp.responsibilities)) {
+          exp.responsibilities.forEach((r: string) => docLines.push(`  • ${r}`))
+        }
+        docLines.push('')
+      }
+    })
+  }
+
+  if (body.education && body.education.length) {
+    docLines.push('EDUCATION')
+    docLines.push('----------------------------------------------------------------')
+    body.education.forEach((edu: any) => {
+      if (edu.school || edu.degree) {
+        docLines.push(`${edu.school || 'University'} - ${edu.degree || ''} ${edu.field || ''}`)
+        if (edu.graduation_date) docLines.push(`  Graduation: ${edu.graduation_date} ${edu.gpa ? '| GPA: ' + edu.gpa : ''}`)
+        docLines.push('')
+      }
+    })
+  }
+
+  if (body.projects && body.projects.length) {
+    docLines.push('PROJECTS')
+    docLines.push('----------------------------------------------------------------')
+    body.projects.forEach((proj: any) => {
+      if (proj.name) {
+        docLines.push(`${proj.name} ${proj.technologies ? '| Technologies: ' + proj.technologies : ''}`)
+        if (proj.description) docLines.push(`  ${proj.description}`)
+        if (proj.link) docLines.push(`  Link: ${proj.link}`)
+        docLines.push('')
+      }
+    })
+  }
+
+  if (body.skills) {
+    docLines.push('SKILLS & COMPETENCIES')
+    docLines.push('----------------------------------------------------------------')
+    if (Array.isArray(body.skills.technical) && body.skills.technical.length) {
+      docLines.push(`Technical Skills: ${body.skills.technical.join(', ')}`)
+    }
+    if (Array.isArray(body.skills.tools) && body.skills.tools.length) {
+      docLines.push(`Tools & Technologies: ${body.skills.tools.join(', ')}`)
+    }
+    if (Array.isArray(body.skills.languages) && body.skills.languages.length) {
+      docLines.push(`Languages: ${body.skills.languages.join(', ')}`)
+    }
+    if (Array.isArray(body.skills.soft) && body.skills.soft.length) {
+      docLines.push(`Soft Skills: ${body.skills.soft.join(', ')}`)
+    }
+  }
+
+  const content = docLines.join('\n')
   const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = fallbackName.replace(/\.docx$/, '.txt')
+  a.download = fallbackName.replace(/\.docx$/, `_${template.toLowerCase()}.txt`)
   a.click()
   URL.revokeObjectURL(url)
 }
