@@ -1128,22 +1128,45 @@ export function BuilderPage() {
                   <div
                     style={{
                       position: 'absolute',
-                      bottom: '12px',
-                      right: '12px',
-                      background: 'rgba(15, 23, 42, 0.85)',
-                      backdropFilter: 'blur(8px)',
+                      bottom: '14px',
+                      left: '14px',
+                      right: '14px',
+                      background: 'rgba(15, 23, 42, 0.92)',
+                      backdropFilter: 'blur(10px)',
                       color: '#ffffff',
-                      padding: '0.4rem 0.8rem',
-                      borderRadius: '8px',
-                      fontSize: '0.74rem',
+                      padding: '0.65rem 1rem',
+                      borderRadius: '12px',
+                      fontSize: '0.8rem',
                       fontWeight: 700,
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '6px',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+                      justifyContent: 'space-between',
+                      gap: '8px',
+                      boxShadow: '0 8px 20px rgba(0,0,0,0.35)',
+                      border: '1px solid rgba(255,255,255,0.1)',
                     }}
                   >
-                    <Check size={14} style={{ color: '#10b981' }} /> Exact Overleaf Resume Template Image
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Sparkles size={16} style={{ color: '#38bdf8' }} />
+                      <span>This is just to preview. Let's start building with this template if you like?</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setTab('Profile')}
+                      style={{
+                        background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
+                        color: '#ffffff',
+                        border: 'none',
+                        padding: '0.35rem 0.8rem',
+                        borderRadius: '8px',
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Start Building →
+                    </button>
                   </div>
                 </div>
               ) : (
