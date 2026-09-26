@@ -81,7 +81,50 @@ def init_database():
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
     ''')
-    
+
+    # Create user_notes table
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS user_notes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        content TEXT,
+        category TEXT DEFAULT 'General',
+        tags TEXT DEFAULT '[]',
+        color TEXT DEFAULT '#3b82f6',
+        is_pinned INTEGER DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    ''')
+
+    # Create daily_checkpoints table
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS daily_checkpoints (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date TEXT NOT NULL UNIQUE,
+        target_focus TEXT DEFAULT '',
+        tasks TEXT DEFAULT '[]',
+        habit_water INTEGER DEFAULT 0,
+        habit_study_mins INTEGER DEFAULT 0,
+        habit_code_mins INTEGER DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    ''')
+
+    # Create personal_diary table
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS personal_diary (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date TEXT NOT NULL,
+        title TEXT NOT NULL,
+        entry TEXT NOT NULL,
+        mood TEXT DEFAULT '😊',
+        productivity_rating INTEGER DEFAULT 5,
+        tags TEXT DEFAULT '[]',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+    ''')
+
     conn.commit()
     conn.close()
 
@@ -573,5 +616,256 @@ def reset_ai_analysis_stats():
         conn.rollback()
         print(f"Error resetting AI analysis stats: {e}")
         return {"success": False, "message": f"Error resetting AI analysis statistics: {str(e)}"}
+    finally:
+        conn.close()
+
+
+# ------------------------------------------------------------------
+# NOTES SAVER CRUD
+# ------------------------------------------------------------------
+def get_all_notes(q=None, category=None):
+    conn = get_database_connection()
+    cursor = conn.cursor()
+    try:
+        query = "SELECT id, title, content, category, tags, color, is_pinned, created_at, updated_at FROM user_notes WHERE 1=1"
+        params = []
+        if category and category != 'All':
+            query += " AND category = ?"
+            params.append(category)
+        if q:
+            query += " AND (title LIKE ? OR content LIKE ? OR tags LIKE ?)"
+            like_str = f"%{q}%"
+            params.extend([like_str, like_str, like_str])
+        query += " ORDER BY is_pinned DESC, updated_at DESC"
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
+        import json
+        notes = []
+        for r in rows:
+            try:
+                parsed_tags = json.loads(r[4]) if r[4] else []
+            except Exception:
+                parsed_tags = [t.strip() for t in str(r[4]).split(',') if t.strip()]
+            notes.append({
+                "id": r[0],
+                "title": r[1],
+                "content": r[2] or "",
+                "category": r[3] or "General",
+                "tags": parsed_tags,
+                "color": r[5] or "#3b82f6",
+                "is_pinned": bool(r[6]),
+                "created_at": r[7],
+                "updated_at": r[8]
+            })
+        return notes
+    except Exception as e:
+        print(f"Error reading notes: {e}")
+        return []
+    finally:
+        conn.close()
+
+
+def add_or_update_note(data):
+    conn = get_database_connection()
+    cursor = conn.cursor()
+    import json
+    note_id = data.get("id")
+    title = data.get("title", "Untitled Note")
+    content = data.get("content", "")
+    category = data.get("category", "General")
+    tags = json.dumps(data.get("tags") or [])
+    color = data.get("color", "#3b82f6")
+    is_pinned = 1 if data.get("is_pinned") else 0
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    try:
+        if note_id:
+            cursor.execute('''
+                UPDATE user_notes
+                SET title=?, content=?, category=?, tags=?, color=?, is_pinned=?, updated_at=?
+                WHERE id=?
+            ''', (title, content, category, tags, color, is_pinned, now, note_id))
+            conn.commit()
+            return note_id
+        else:
+            cursor.execute('''
+                INSERT INTO user_notes (title, content, category, tags, color, is_pinned, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ''', (title, content, category, tags, color, is_pinned, now, now))
+            conn.commit()
+            return cursor.lastrowid
+    except Exception as e:
+        print(f"Error saving note: {e}")
+        conn.rollback()
+        return None
+    finally:
+        conn.close()
+
+
+def delete_note_by_id(note_id):
+    conn = get_database_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("DELETE FROM user_notes WHERE id=?", (note_id,))
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Error deleting note: {e}")
+        return False
+    finally:
+        conn.close()
+
+
+# ------------------------------------------------------------------
+# DAILY CHECKPOINTS CRUD
+# ------------------------------------------------------------------
+def get_daily_checkpoint_by_date(target_date):
+    conn = get_database_connection()
+    cursor = conn.cursor()
+    import json
+    try:
+        cursor.execute("SELECT id, date, target_focus, tasks, habit_water, habit_study_mins, habit_code_mins, created_at FROM daily_checkpoints WHERE date=?", (target_date,))
+        row = cursor.fetchone()
+        if not row:
+            return {
+                "date": target_date,
+                "target_focus": "",
+                "tasks": [],
+                "habit_water": 0,
+                "habit_study_mins": 0,
+                "habit_code_mins": 0
+            }
+        try:
+            tasks = json.loads(row[3]) if row[3] else []
+        except Exception:
+            tasks = []
+        return {
+            "id": row[0],
+            "date": row[1],
+            "target_focus": row[2] or "",
+            "tasks": tasks,
+            "habit_water": row[4] or 0,
+            "habit_study_mins": row[5] or 0,
+            "habit_code_mins": row[6] or 0
+        }
+    except Exception as e:
+        print(f"Error fetching checkpoint: {e}")
+        return {
+            "date": target_date,
+            "target_focus": "",
+            "tasks": [],
+            "habit_water": 0,
+            "habit_study_mins": 0,
+            "habit_code_mins": 0
+        }
+    finally:
+        conn.close()
+
+
+def save_daily_checkpoint_data(data):
+    conn = get_database_connection()
+    cursor = conn.cursor()
+    import json
+    target_date = data.get("date") or datetime.now().strftime("%Y-%m-%d")
+    focus = data.get("target_focus", "")
+    tasks = json.dumps(data.get("tasks") or [])
+    water = data.get("habit_water", 0)
+    study = data.get("habit_study_mins", 0)
+    code = data.get("habit_code_mins", 0)
+
+    try:
+        cursor.execute("SELECT id FROM daily_checkpoints WHERE date=?", (target_date,))
+        existing = cursor.fetchone()
+        if existing:
+            cursor.execute('''
+                UPDATE daily_checkpoints
+                SET target_focus=?, tasks=?, habit_water=?, habit_study_mins=?, habit_code_mins=?
+                WHERE date=?
+            ''', (focus, tasks, water, study, code, target_date))
+        else:
+            cursor.execute('''
+                INSERT INTO daily_checkpoints (date, target_focus, tasks, habit_water, habit_study_mins, habit_code_mins)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (target_date, focus, tasks, water, study, code))
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Error saving checkpoint: {e}")
+        conn.rollback()
+        return False
+    finally:
+        conn.close()
+
+
+# ------------------------------------------------------------------
+# PERSONAL DIARY CRUD
+# ------------------------------------------------------------------
+def get_all_diary_entries():
+    conn = get_database_connection()
+    cursor = conn.cursor()
+    import json
+    try:
+        cursor.execute("SELECT id, date, title, entry, mood, productivity_rating, tags, created_at FROM personal_diary ORDER BY date DESC, id DESC")
+        rows = cursor.fetchall()
+        entries = []
+        for r in rows:
+            try:
+                tags = json.loads(r[6]) if r[6] else []
+            except Exception:
+                tags = []
+            entries.append({
+                "id": r[0],
+                "date": r[1],
+                "title": r[2],
+                "entry": r[3],
+                "mood": r[4] or "😊",
+                "productivity_rating": r[5] or 5,
+                "tags": tags,
+                "created_at": r[7]
+            })
+        return entries
+    except Exception as e:
+        print(f"Error reading diary: {e}")
+        return []
+    finally:
+        conn.close()
+
+
+def add_diary_entry_data(data):
+    conn = get_database_connection()
+    cursor = conn.cursor()
+    import json
+    entry_date = data.get("date") or datetime.now().strftime("%Y-%m-%d")
+    title = data.get("title") or f"Diary Entry for {entry_date}"
+    entry = data.get("entry", "")
+    mood = data.get("mood", "😊")
+    rating = data.get("productivity_rating", 5)
+    tags = json.dumps(data.get("tags") or [])
+
+    try:
+        cursor.execute('''
+            INSERT INTO personal_diary (date, title, entry, mood, productivity_rating, tags)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (entry_date, title, entry, mood, rating, tags))
+        conn.commit()
+        return cursor.lastrowid
+    except Exception as e:
+        print(f"Error saving diary entry: {e}")
+        conn.rollback()
+        return None
+    finally:
+        conn.close()
+
+
+def delete_diary_entry_by_id(entry_id):
+    conn = get_database_connection()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("DELETE FROM personal_diary WHERE id=?", (entry_id,))
+        conn.commit()
+        return True
+    except Exception as e:
+        print(f"Error deleting diary entry: {e}")
+        return False
     finally:
         conn.close()

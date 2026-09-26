@@ -340,6 +340,112 @@ async function analyzeResumeFileLocally(file: File | null, category: string, rol
   }
 }
 
+// ------------------------------------------------------------------
+// LocalStorage helpers for Notes, Checkpoint, and Diary
+// ------------------------------------------------------------------
+function getLocalNotes(q?: string, category?: string) {
+  try {
+    const raw = localStorage.getItem('sh_user_notes')
+    let notes = raw
+      ? JSON.parse(raw)
+      : [
+        {
+          id: 1,
+          title: '🚀 Capstone Project Architecture Notes',
+          content: 'Main stack: React (Vite) + FastAPI + SQLite DB.\nKey features: Resume Builder, ATS Analyzer, Daily Checkpoint, Personal Diary, Job Tracker.',
+          category: 'Study & Tech',
+          tags: ['Capstone', 'Architecture', 'FastAPI'],
+          color: '#3b82f6',
+          is_pinned: true,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        },
+        {
+          id: 2,
+          title: '💡 Interview Preparation Checklist',
+          content: '- Revise System Design basics (Load balancers, Caching, DB Sharding)\n- Practice 2 LeetCode Medium problems daily\n- Prepare STAR method responses for behavioral questions',
+          category: 'Career',
+          tags: ['Interview', 'DSA', 'Behavioral'],
+          color: '#10b981',
+          is_pinned: false,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        },
+      ]
+    if (category && category !== 'All') {
+      notes = notes.filter((n: any) => n.category === category)
+    }
+    if (q) {
+      const lower = q.toLowerCase()
+      notes = notes.filter((n: any) => n.title.toLowerCase().includes(lower) || n.content.toLowerCase().includes(lower))
+    }
+    return notes
+  } catch {
+    return []
+  }
+}
+
+function saveLocalNotes(notes: any[]) {
+  try {
+    localStorage.setItem('sh_user_notes', JSON.stringify(notes))
+  } catch { }
+}
+
+function getLocalCheckpoint(targetDate: string) {
+  try {
+    const raw = localStorage.getItem(`sh_checkpoint_${targetDate}`)
+    if (raw) return JSON.parse(raw)
+    return {
+      date: targetDate,
+      target_focus: 'Master Web App Development & ATS Resume Parsing',
+      tasks: [
+        { id: '1', text: 'Review Resume Builder templates', completed: true, category: 'Core Work', priority: 'High' },
+        { id: '2', text: 'Test ATS Analyzer parsing', completed: true, category: 'Testing', priority: 'High' },
+        { id: '3', text: 'Complete daily code commit', completed: false, category: 'Code', priority: 'Medium' },
+      ],
+      habit_water: 4,
+      habit_study_mins: 120,
+      habit_code_mins: 180,
+    }
+  } catch {
+    return { date: targetDate, target_focus: '', tasks: [], habit_water: 0, habit_study_mins: 0, habit_code_mins: 0 }
+  }
+}
+
+function saveLocalCheckpoint(targetDate: string, data: any) {
+  try {
+    localStorage.setItem(`sh_checkpoint_${targetDate}`, JSON.stringify(data))
+  } catch { }
+}
+
+function getLocalDiaryEntries() {
+  try {
+    const raw = localStorage.getItem('sh_personal_diary')
+    if (raw) return JSON.parse(raw)
+    const today = new Date().toISOString().split('T')[0]
+    return [
+      {
+        id: 1,
+        date: today,
+        title: 'Productive Day & Milestone Reached',
+        entry: 'Built the ATS analyzer with real dynamic parsing and latex templates. Pushed code to GitHub. Feeling confident about the upcoming capstone presentation!',
+        mood: '🔥',
+        productivity_rating: 5,
+        tags: ['Capstone', 'Achievement', 'Growth'],
+        created_at: new Date().toISOString(),
+      },
+    ]
+  } catch {
+    return []
+  }
+}
+
+function saveLocalDiaryEntries(entries: any[]) {
+  try {
+    localStorage.setItem('sh_personal_diary', JSON.stringify(entries))
+  } catch { }
+}
+
 export async function apiGet<T>(path: string): Promise<T> {
   try {
     const res = await fetch(`${API_BASE}${path}`)
@@ -360,6 +466,21 @@ export async function apiGet<T>(path: string): Promise<T> {
   }
   if (path === '/dashboard') {
     return getFallbackDashboardResponse() as unknown as T
+  }
+
+  // Notes, Checkpoint & Diary GET handlers
+  if (path.startsWith('/notes')) {
+    const url = new URL(path, 'http://dummy.com')
+    const q = url.searchParams.get('q') || undefined
+    const category = url.searchParams.get('category') || undefined
+    return { notes: getLocalNotes(q, category) } as unknown as T
+  }
+  if (path.startsWith('/checkpoints/')) {
+    const targetDate = path.split('/')[2] || new Date().toISOString().split('T')[0]
+    return { checkpoint: getLocalCheckpoint(targetDate) } as unknown as T
+  }
+  if (path === '/diary') {
+    return { entries: getLocalDiaryEntries() } as unknown as T
   }
 
   throw new Error(`Endpoint ${path} unreachable`)
@@ -407,6 +528,79 @@ export async function apiSend<T>(path: string, method: string, body?: any): Prom
     let apps = getLocalTrackerApps()
     apps = apps.filter((a: any) => a.id !== app_id)
     saveLocalTrackerApps(apps)
+    return { ok: true } as unknown as T
+  }
+
+  // Notes Saver mutations
+  if (path === '/notes' && method === 'POST') {
+    const notes = getLocalNotes()
+    if (body.id) {
+      const idx = notes.findIndex((n: any) => n.id === body.id)
+      if (idx >= 0) {
+        notes[idx] = { ...notes[idx], ...body, updated_at: new Date().toISOString() }
+      } else {
+        notes.unshift({ ...body, updated_at: new Date().toISOString() })
+      }
+      saveLocalNotes(notes)
+      return { id: body.id, ok: true } as unknown as T
+    } else {
+      const newId = Date.now()
+      const newNote = {
+        id: newId,
+        title: body.title || 'Untitled Note',
+        content: body.content || '',
+        category: body.category || 'General',
+        tags: body.tags || [],
+        color: body.color || '#3b82f6',
+        is_pinned: !!body.is_pinned,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      }
+      notes.unshift(newNote)
+      saveLocalNotes(notes)
+      return { id: newId, ok: true } as unknown as T
+    }
+  }
+
+  if (path.startsWith('/notes/') && method === 'DELETE') {
+    const noteId = Number(path.split('/')[2])
+    let notes = getLocalNotes()
+    notes = notes.filter((n: any) => n.id !== noteId)
+    saveLocalNotes(notes)
+    return { ok: true } as unknown as T
+  }
+
+  // Daily Checkpoints mutations
+  if (path === '/checkpoints' && method === 'POST') {
+    const targetDate = body.date || new Date().toISOString().split('T')[0]
+    saveLocalCheckpoint(targetDate, body)
+    return { ok: true } as unknown as T
+  }
+
+  // Personal Diary mutations
+  if (path === '/diary' && method === 'POST') {
+    const entries = getLocalDiaryEntries()
+    const newId = Date.now()
+    const newEntry = {
+      id: newId,
+      date: body.date || new Date().toISOString().split('T')[0],
+      title: body.title || 'Personal Entry',
+      entry: body.entry || '',
+      mood: body.mood || '😊',
+      productivity_rating: body.productivity_rating || 5,
+      tags: body.tags || [],
+      created_at: new Date().toISOString(),
+    }
+    entries.unshift(newEntry)
+    saveLocalDiaryEntries(entries)
+    return { id: newId, ok: true } as unknown as T
+  }
+
+  if (path.startsWith('/diary/') && method === 'DELETE') {
+    const entryId = Number(path.split('/')[2])
+    let entries = getLocalDiaryEntries()
+    entries = entries.filter((e: any) => e.id !== entryId)
+    saveLocalDiaryEntries(entries)
     return { ok: true } as unknown as T
   }
 

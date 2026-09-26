@@ -4,7 +4,7 @@ import {
     BookOpen, FileSearch, Briefcase, ArrowRight, CheckCircle, Sparkles,
     Upload, FileText, Search, KanbanSquare, BarChart3, ChevronRight, Zap,
     Target, TrendingUp, Rocket, Layers, Cpu, Award, Star, GraduationCap,
-    UserCheck, ShieldCheck, LogOut, CheckCircle2, Lock
+    UserCheck, ShieldCheck, LogOut, CheckCircle2, Lock, NotebookPen
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import GradientWaves from './GradientWaves'
@@ -162,6 +162,7 @@ const features: Feature[] = [
 
 const SECTOR_FEATURES = [
     { icon: BookOpen, label: 'Study Summarizer' },
+    { icon: NotebookPen, label: 'Notes & Tasks' },
     { icon: FileSearch, label: 'Resume Analyzer' },
     { icon: FileText, label: 'Resume Builder' },
     { icon: Briefcase, label: 'Application Tracker' },

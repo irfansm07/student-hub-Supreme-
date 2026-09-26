@@ -11,6 +11,7 @@ import { BuilderPage } from './pages/BuilderPage'
 import { TrackerPage } from './pages/TrackerPage'
 import { JobsPage } from './pages/JobsPage'
 import { DashboardPage } from './pages/DashboardPage'
+import { WorkspacePage } from './pages/WorkspacePage'
 
 export default function App() {
   return (
@@ -21,6 +22,14 @@ export default function App() {
             <Routes>
               <Route element={<AppShell />}>
                 <Route path="/" element={<HomePage />} />
+                <Route
+                  path="/workspace"
+                  element={
+                    <ProtectedRoute>
+                      <WorkspacePage />
+                    </ProtectedRoute>
+                  }
+                />
                 <Route
                   path="/summarizer"
                   element={

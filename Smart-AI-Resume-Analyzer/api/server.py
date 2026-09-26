@@ -20,7 +20,18 @@ os.chdir(ROOT)
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
-from config.database import init_database, get_database_connection
+from config.database import (
+    init_database,
+    get_database_connection,
+    get_all_notes,
+    add_or_update_note,
+    delete_note_by_id,
+    get_daily_checkpoint_by_date,
+    save_daily_checkpoint_data,
+    get_all_diary_entries,
+    add_diary_entry_data,
+    delete_diary_entry_by_id,
+)
 from config.job_roles import JOB_ROLES
 from jobs.companies import get_featured_companies, get_market_insights
 from jobs.job_portals import JobPortal
@@ -314,3 +325,96 @@ def dashboard() -> dict:
         "recent_scores": recent_scores,
         "pipeline": metrics,
     }
+
+
+# ------------------------------------------------------------------
+# NOTES SAVER, DAILY CHECKPOINT & PERSONAL DIARY API ENDPOINTS
+# ------------------------------------------------------------------
+
+class NoteBody(BaseModel):
+    id: Optional[int] = None
+    title: str = "Untitled Note"
+    content: str = ""
+    category: str = "General"
+    tags: list = []
+    color: str = "#3b82f6"
+    is_pinned: bool = False
+
+
+class CheckpointBody(BaseModel):
+    date: str
+    target_focus: str = ""
+    tasks: list = []
+    habit_water: int = 0
+    habit_study_mins: int = 0
+    habit_code_mins: int = 0
+
+
+class DiaryBody(BaseModel):
+    date: str = Field(default_factory=lambda: datetime.now().strftime("%Y-%m-%d"))
+    title: str = ""
+    entry: str
+    mood: str = "😊"
+    productivity_rating: int = 5
+    tags: list = []
+
+
+@app.get("/api/notes")
+def list_notes(q: Optional[str] = None, category: Optional[str] = None) -> dict:
+    init_database()
+    notes = get_all_notes(q=q, category=category)
+    return {"notes": notes}
+
+
+@app.post("/api/notes")
+def save_note(body: NoteBody) -> dict:
+    init_database()
+    note_id = add_or_update_note(body.model_dump())
+    if not note_id:
+        raise HTTPException(status_code=400, detail="Could not save note.")
+    return {"id": note_id, "ok": True}
+
+
+@app.delete("/api/notes/{note_id}")
+def remove_note(note_id: int) -> dict:
+    init_database()
+    ok = delete_note_by_id(note_id)
+    return {"ok": ok}
+
+
+@app.get("/api/checkpoints/{target_date}")
+def get_checkpoint(target_date: str) -> dict:
+    init_database()
+    checkpoint = get_daily_checkpoint_by_date(target_date)
+    return {"checkpoint": checkpoint}
+
+
+@app.post("/api/checkpoints")
+def save_checkpoint(body: CheckpointBody) -> dict:
+    init_database()
+    ok = save_daily_checkpoint_data(body.model_dump())
+    return {"ok": ok}
+
+
+@app.get("/api/diary")
+def list_diary() -> dict:
+    init_database()
+    entries = get_all_diary_entries()
+    return {"entries": entries}
+
+
+@app.post("/api/diary")
+def create_diary(body: DiaryBody) -> dict:
+    init_database()
+    entry_id = add_diary_entry_data(body.model_dump())
+    if not entry_id:
+        raise HTTPException(status_code=400, detail="Could not save diary entry.")
+    return {"id": entry_id, "ok": True}
+
+
+@app.delete("/api/diary/{entry_id}")
+def remove_diary(entry_id: int) -> dict:
+    init_database()
+    ok = delete_diary_entry_by_id(entry_id)
+    return {"ok": ok}
+

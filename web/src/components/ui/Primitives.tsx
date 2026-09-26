@@ -87,10 +87,13 @@ export function Field({ label, children }: { label: string; children: ReactNode 
   )
 }
 
-export function Stat({ value, label }: { value: string | number; label: string }) {
+export function Stat({ value, label, icon: Icon }: { value: ReactNode; label: string; icon?: any }) {
   return (
     <div className="stat">
-      <strong>{value}</strong>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        {Icon && <Icon size={18} style={{ color: 'var(--ink-muted)' }} />}
+        <strong>{value}</strong>
+      </div>
       <em>{label}</em>
     </div>
   )
