@@ -6,9 +6,9 @@ import { apiDownload } from '../lib/api'
 import { useToast } from '../context/ToastContext'
 
 export interface ResumeTemplateOption {
-  id: 'MinimalAcademic' | 'ReCeIVe' | 'TwentyOneSeconds' | 'JakesResume'
+  id: 'LewisVerstappen' | 'JackSparrow' | 'JaneDoe' | 'CarlJohnson' | 'ReCeIVe'
   name: string
-  author: string
+  subtitle: string
   score: number
   badge: string
   bestFor: string
@@ -18,134 +18,138 @@ export interface ResumeTemplateOption {
   latexStyle: string
 }
 
-export const OVERLEAF_IMAGE_TEMPLATES: ResumeTemplateOption[] = [
+export const EXACT_OVERLEAF_TEMPLATES: ResumeTemplateOption[] = [
   {
-    id: 'TwentyOneSeconds',
-    name: 'TwentyOneSeconds Developer CV',
-    author: 'Alessandro Trinca Tornidor',
+    id: 'LewisVerstappen',
+    name: 'Lewis Verstappen Left-Margin CV',
+    subtitle: 'Sidebar Section Titles',
     score: 99,
     badge: '99 ATS Score',
-    bestFor: 'Full Stack, Backend & Web Developers',
-    description: 'Structured layout with header links, target role title, key-value skills table (Languages, Frameworks, Databases), right-aligned dates, and Project Source Code links.',
-    accentColor: '#0f172a',
-    fontFamily: '"Computer Modern", "Segoe UI", sans-serif',
+    bestFor: 'Executives, Designers & Modern Tech Roles',
+    description: 'Clean modern layout with section titles (CONTACT INFO, ABOUT ME, EXPERIENCE, EDUCATION) placed in the left margin.',
+    accentColor: '#334155',
+    fontFamily: '"Plus Jakarta Sans", sans-serif',
+    latexStyle: 'Left Margin Sidebar LaTeX',
+  },
+  {
+    id: 'JackSparrow',
+    name: 'Jack Sparrow TwentySeconds Creative',
+    subtitle: 'Dark Header & Avatar Sidebar',
+    score: 97,
+    badge: '97 ATS Score',
+    bestFor: 'Creative Engineers, UI/UX & Full Stack',
+    description: 'Dark top header bar, circular profile avatar, light grey left sidebar with blue category badges, skill progress bars, and language rating dots.',
+    accentColor: '#0284c7',
+    fontFamily: '"Plus Jakarta Sans", sans-serif',
+    latexStyle: 'TwentySeconds Graphic LaTeX',
+  },
+  {
+    id: 'JaneDoe',
+    name: 'Jane Doe TwentyOneSeconds Developer',
+    subtitle: 'Full Stack Tech Developer CV',
+    score: 99,
+    badge: '99 ATS Score',
+    bestFor: 'Web Developers, Backend & Software Engineers',
+    description: 'Top header with portfolio & LeetCode links, blue target role title, structured technical skills table, and project Source Code links.',
+    accentColor: '#2563eb',
+    fontFamily: 'Arial, sans-serif',
     latexStyle: 'TwentyOneSeconds LaTeX',
   },
   {
-    id: 'MinimalAcademic',
-    name: 'Minimal Academic CV Template',
-    author: 'Mariia Steeghs-Turchina',
+    id: 'CarlJohnson',
+    name: 'Carl Johnson Classic Academic Serif',
+    subtitle: 'Formal Blue Serif & Thesis CV',
     score: 98,
     badge: '98 ATS Score',
-    bestFor: 'Academic, Research, CS & University',
-    description: 'Academic CV with optional top-right photo box, left-aligned date column, full-width section underline rules, and categorized qualifications.',
-    accentColor: '#1e293b',
-    fontFamily: 'Georgia, "Times New Roman", serif',
-    latexStyle: 'Minimal Academic LaTeX',
+    bestFor: 'Research Scholars, Postdocs & Academic Roles',
+    description: 'Centered blue serif header with star-separated contact line (✻), blue italic section titles, right-aligned dates, and thesis project highlights.',
+    accentColor: '#1d4ed8',
+    fontFamily: 'Georgia, serif',
+    latexStyle: 'Academic Classic Serif LaTeX',
   },
   {
     id: 'ReCeIVe',
     name: 'ReCeIVe Classic Centered CV',
-    author: 'Gedlex',
-    score: 97,
-    badge: '97 ATS Score',
-    bestFor: 'Corporate, Analysts & Engineering',
-    description: 'Symmetric centered header layout with brief description, structured competency list (Programming, Data Analysis, Visualization), and right-aligned dates.',
-    accentColor: '#0369a1',
-    fontFamily: '"Times New Roman", Georgia, serif',
+    subtitle: 'Symmetric Blue Centered Layout',
+    score: 96,
+    badge: '96 ATS Score',
+    bestFor: 'Analysts, Corporate & Engineers',
+    description: 'Symmetric centered header layout with brief description paragraph, structured technical competencies, and right-aligned position dates.',
+    accentColor: '#1e3a8a',
+    fontFamily: '"Times New Roman", serif',
     latexStyle: 'ReCeIVe Class LaTeX',
-  },
-  {
-    id: 'JakesResume',
-    name: "Jake's Overleaf Resume",
-    author: ' r/EngineeringResumes',
-    score: 99,
-    badge: '99 ATS Score',
-    bestFor: 'Software Engineer & Tech Roles',
-    description: 'Classic r/EngineeringResumes single-page standard with horizontal rules and bulleted metric achievements.',
-    accentColor: '#0284c7',
-    fontFamily: 'Arial, sans-serif',
-    latexStyle: "Jake's LaTeX Standard",
   },
 ]
 
 const SAMPLE_PROFILE = {
-  template: 'TwentyOneSeconds',
+  template: 'LewisVerstappen',
   personal_info: {
-    full_name: 'Jane Doe',
-    title: 'FULL STACK DEVELOPER',
-    email: 'jane.doe@email.com',
-    phone: '5555555555',
-    location: 'Anycity, Anystate, Anycountry',
-    linkedin: 'linkedin.com/in/janedoe',
-    portfolio: 'github.com/janedoe | leetcode.com/janedoe',
+    full_name: 'Lewis Verstappen',
+    title: 'Senior Product Architect',
+    email: 'youremail@email.com',
+    phone: '+31 6 69696969',
+    location: 'Street 185, 1234IJ, City Name, Morocco',
+    linkedin: 'linkedin.com/in/username',
+    portfolio: 'github.com/username',
     show_photo: true,
   },
-  summary: 'I am a highly skilled web developer with over 3 years of experience in HTML, CSS, JavaScript, and PHP. I have knowledge of popular frameworks such as React, Angular, and Vue.js and experience with REST APIs and MVC frameworks.',
+  summary: 'Nam dui ligula, fringilla a, euismod sodales, sollicitudin vel, wisi. Morbi auctor lorem non justo. Nam lacus libero, pretium at, lobortis vitae, ultricies et, tellus. Donec aliquet, tortor sed accumsan bibendum, erat ligula aliquet magna, vitae ornare odio metus a mi.',
   experience: [
     {
-      company: 'Anycompany',
-      position: 'Web Developer',
-      start_date: 'Apr 2022',
-      end_date: 'Present',
-      description: 'Remote — AnyCity, AnyState, AnyCountry',
-      responsibilities: 'Designed and developed dynamic and responsive websites using HTML, CSS, JavaScript, and PHP.\nWorked with REST APIs to retrieve and display data from databases.\nImproved website performance and speed through optimization techniques by 25%.',
+      company: 'The Cool Company',
+      position: 'JOB TITLE',
+      start_date: '2020',
+      end_date: '2023',
+      description: 'Earth, Alpha quadrant',
+      responsibilities: 'Successfully sent 5 humans to Mars with the biggest blah.\nIncreased the average number of humans sent to Pluto by 146%.',
     },
     {
-      company: 'Anycompany',
-      position: 'Backend Developer',
-      start_date: 'Aug 2021',
-      end_date: 'Nov 2022',
-      description: 'AnyCity, AnyState, AnyCountry',
-      responsibilities: 'Worked with MVC frameworks to develop robust and scalable backends.\nTroubleshot and fixed bugs and issues in the backend to ensure smooth operation of the application.',
-    },
-    {
-      company: 'Anycompany',
-      position: 'Backend Developer Intern',
-      start_date: 'Jan 2021',
-      end_date: 'Aug 2021',
-      description: 'AnyCity, AnyState, AnyCountry',
-      responsibilities: 'Assisted senior web developers in the design and development of websites using HTML, CSS, and JavaScript.',
+      company: 'SweetWorld Technologies',
+      position: 'ANOTHER JOB TITLE',
+      start_date: '2016',
+      end_date: '2019',
+      description: 'Santiago, Chile (the most delicious division)',
+      responsibilities: 'Solved the world hunger by producing new nutritious candy.',
     }
   ],
   education: [
     {
-      school: 'University of AnyState',
-      degree: 'Bachelor of Science in Computer Science',
-      field: 'Computer Science',
-      graduation_date: 'Jan 2016 – Dec 2020',
-      gpa: '3.9 GPA',
+      school: 'Dutch Beer University',
+      degree: 'MSc IN BREWING BEER',
+      field: 'Urk, The Netherlands',
+      graduation_date: '2020-2023',
+      gpa: 'Summa cum laude',
+    },
+    {
+      school: 'The University of Wasted Time',
+      degree: 'BA IN PROCRASTINATING',
+      field: 'Naples, Italy',
+      graduation_date: '2016-2019',
+      gpa: 'First Class',
     }
   ],
   projects: [
     {
-      name: 'Project 1',
-      technologies: 'React.js, Redux, PHP, MySQL',
-      description: 'Designed and developed a clean and modern website using HTML, CSS, and JavaScript.\nOptimized website for speed and user experience.\nUtilized responsive design to ensure cross-compatibility across all devices.\nDeployed on GitHub pages via GitHub Actions.',
-      link: 'Source Code',
-    },
-    {
-      name: 'Project 2',
-      technologies: 'Node.js, Express, JavaScript, Git',
-      description: 'A CRUD application exposed using a RESTful API made with Node.js.\nExposed POST, GET, PATCH and DELETE HTTP methods using Express.',
+      name: 'Mars Terraforming Module',
+      technologies: 'React, Node.js, Python',
+      description: 'Built automated atmospheric monitoring system deployed across 3 planetary stations.',
       link: 'Source Code',
     }
   ],
   certifications: [
-    'Certified Web Developer by the W3C',
-    'Microsoft Certified: Azure Developer Associate',
-    'AWS Certified Developer - Associate',
+    'Certified Web Developer by W3C',
+    'AWS Certified Solutions Architect',
   ],
   skills: {
-    technical: 'JavaScript, PHP, Java, HTML, CSS\nReact.js, Angular, Express, Node.js\nMaterial, Redux, react-router\nMongoDB, PostgreSQL\nVisual Studio Code, Git, GitHub',
-    tools: 'Git, VS Code, Postman, Docker, AWS',
-    languages: 'English (Native), Spanish (Basic)',
-    soft: 'Leadership, Problem-solving, Writing, Communication',
+    technical: 'JavaScript, Python, React, Node.js, HTML/CSS\nExpress, FastAPI, Redux, PostgreSQL\nMongoDB, Docker, Git, VS Code',
+    tools: 'Git, Docker, AWS, Figma',
+    languages: 'English (Mother tongue), Dutch (Fluent), Spanish (Basic)',
+    soft: 'Leadership, Problem Solving, Communication',
   }
 }
 
 const empty = {
-  template: 'TwentyOneSeconds',
+  template: 'LewisVerstappen',
   personal_info: {
     full_name: '',
     title: '',
@@ -154,7 +158,7 @@ const empty = {
     location: '',
     linkedin: '',
     portfolio: '',
-    show_photo: false,
+    show_photo: true,
   },
   summary: '',
   experience: [{ company: '', position: '', start_date: '', end_date: '', description: '', responsibilities: '' }],
@@ -164,7 +168,7 @@ const empty = {
   skills: { technical: '', soft: '', languages: '', tools: '' },
 }
 
-const tabs = ['Templates', 'Profile', 'Experience', 'Education', 'Projects', 'Certifications & Skills', 'LaTeX Code'] as const
+const tabs = ['Templates', 'Profile', 'Experience', 'Education', 'Projects', 'Skills & Certs', 'LaTeX Code'] as const
 
 function splitList(value: string) {
   return value.split('\n').map((s) => s.trim()).filter(Boolean)
@@ -183,73 +187,40 @@ function escapeLaTeX(str: string) {
 export function generateLaTeXSource(form: typeof SAMPLE_PROFILE) {
   const p = form.personal_info
   return `% Overleaf CV Template (${form.template})
-% Generated by Student Hub Studio
 \\documentclass[letterpaper,10pt]{article}
 \\usepackage[empty]{fullpage}
 \\usepackage{titlesec}
 \\usepackage{enumitem}
 \\usepackage[hidelinks]{hyperref}
 
-\\addtolength{\\oddsidemargin}{-0.5in}
-\\addtolength{\\textwidth}{1.0in}
-\\addtolength{\\topmargin}{-0.5in}
-\\addtolength{\\textheight}{1.0in}
-
-\\titleformat{\\section}{\\large\\bfseries\\uppercase}{}{0em}{}[\\titlerule]
-
 \\begin{document}
+\\begin{center}
+  {\\Huge \\bfseries ${escapeLaTeX(p.full_name || 'LEWIS VERSTAPPEN')}}\\\\
+  ${escapeLaTeX(p.email || '')} $|$ ${escapeLaTeX(p.phone || '')} $|$ ${escapeLaTeX(p.location || '')}
+\\end{center}
 
-\\begin{tabular*}{\\textwidth}{l@{\\extracolsep{\\fill}}r}
-  \\textbf{\\Huge ${escapeLaTeX(p.full_name || 'Jane Doe')}} & ${escapeLaTeX(p.location || 'Location')}\\\\
-  ${escapeLaTeX(p.portfolio || 'Website')} & ${escapeLaTeX(p.email || 'Email')} $|$ ${escapeLaTeX(p.phone || 'Mobile')}\\\\
-\\end{tabular*}
-
-\\vspace{4pt}
-\\textbf{\\large ${escapeLaTeX(p.title || 'FULL STACK DEVELOPER')}}
-
-\\vspace{6pt}
+\\section*{ABOUT ME}
 ${escapeLaTeX(form.summary || '')}
 
-\\section{Technical Skills}
-\\begin{description}[font=\\normalfont\\bfseries]
-  \\item[Languages] : ${escapeLaTeX(form.skills.technical.split('\n')[0] || '')}
-  \\item[Frameworks] : ${escapeLaTeX(form.skills.technical.split('\n')[1] || '')}
-  \\item[Libraries] : ${escapeLaTeX(form.skills.technical.split('\n')[2] || '')}
-  \\item[Databases] : ${escapeLaTeX(form.skills.technical.split('\n')[3] || '')}
-\\end{description}
-
-\\section{Experience}
+\\section*{EXPERIENCE}
 ${form.experience
       .map(
-        (exp) => `
-\\textbf{${escapeLaTeX(exp.position)}} \\hfill ${escapeLaTeX(exp.start_date)} -- ${escapeLaTeX(exp.end_date)}\\\\
-\\textit{${escapeLaTeX(exp.company)}} \\hfill \\textit{${escapeLaTeX(exp.description)}}\\\\
-\\begin{itemize}[leftmargin=*]
-${splitList(exp.responsibilities)
-            .map((b) => `  \\item ${escapeLaTeX(b)}`)
-            .join('\n')}
-\\end{itemize}
-`
+        (e) => `\\textbf{${escapeLaTeX(e.position)}} \\hfill ${escapeLaTeX(e.start_date)}--${escapeLaTeX(e.end_date)}\\\\
+\\textit{${escapeLaTeX(e.company)}} $|$ \\textit{${escapeLaTeX(e.description)}}\\\\
+\\begin{itemize}
+${splitList(e.responsibilities).map(r => `  \\item ${escapeLaTeX(r)}`).join('\n')}
+\\end{itemize}`
       )
-      .join('\n')}
+      .join('\n\n')}
 
-\\section{Education}
+\\section*{EDUCATION}
 ${form.education
       .map(
-        (ed) => `
-\\textbf{${escapeLaTeX(ed.school)}} \\hfill ${escapeLaTeX(ed.field || '')}\\\\
-\\textit{${escapeLaTeX(ed.degree)}} \\hfill ${escapeLaTeX(ed.graduation_date)}\\\\
-`
+        (ed) => `\\textbf{${escapeLaTeX(ed.degree)}} \\hfill ${escapeLaTeX(ed.graduation_date)}\\\\
+\\textit{${escapeLaTeX(ed.school)}} $|$ \\textit{${escapeLaTeX(ed.field)}}`
       )
-      .join('\n')}
-
-\\section{Certifications}
-\\begin{itemize}[leftmargin=*]
-${form.certifications.map((c) => `  \\item ${escapeLaTeX(c)}`).join('\n')}
-\\end{itemize}
-
-\\end{document}
-`
+      .join('\n\n')}
+\\end{document}`
 }
 
 export function BuilderPage() {
@@ -260,7 +231,7 @@ export function BuilderPage() {
   const [loading, setLoading] = useState(false)
 
   const person = form.personal_info
-  const selectedTemplate = OVERLEAF_IMAGE_TEMPLATES.find((t) => t.id === form.template) || OVERLEAF_IMAGE_TEMPLATES[0]
+  const selectedTemplate = EXACT_OVERLEAF_TEMPLATES.find((t) => t.id === form.template) || EXACT_OVERLEAF_TEMPLATES[0]
 
   const hasProfile = !!(person.full_name && person.email)
   const hasExperience = form.experience.some((e) => e.position || e.company) || form.education.some((e) => e.school)
@@ -290,7 +261,7 @@ export function BuilderPage() {
 
   const handleFillSample = () => {
     setForm(SAMPLE_PROFILE)
-    toast.push('Loaded Overleaf Sample Profile (TwentyOneSeconds CV style)!')
+    toast.push('Loaded exact Overleaf template sample data!')
   }
 
   const handleCopyLaTeX = () => {
@@ -323,8 +294,8 @@ export function BuilderPage() {
       <GuidedPageHeader
         icon={FileText}
         kicker="Overleaf LaTeX Studio"
-        title="Overleaf CV & ATS Resume Builder"
-        subtitle="Create professional resumes identical to top Overleaf templates (Minimal Academic CV, ReCeIVe, TwentyOneSeconds CV, Jake's Resume)."
+        title="Exact Overleaf Resume Templates"
+        subtitle="Choose from the exact Overleaf & LaTeX CV layouts (Lewis Verstappen Left Margin, Jack Sparrow TwentySeconds, Jane Doe Developer, Carl Johnson Academic)."
         color="#0ea5e9"
         gradient="linear-gradient(135deg, #0ea5e9, #06b6d4)"
         steps={pageSteps}
@@ -367,7 +338,7 @@ export function BuilderPage() {
         </div>
       </div>
 
-      <div className="grid grid-2" style={{ gridTemplateColumns: '1.05fr 0.95fr', gap: '1.2rem' }}>
+      <div className="grid grid-2" style={{ gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }}>
         <FadeIn>
           <Card style={{ padding: '1.2rem' }}>
             <div className="tabs">
@@ -387,32 +358,27 @@ export function BuilderPage() {
             {/* TAB 1: TEMPLATES */}
             {tab === 'Templates' ? (
               <div className="grid" style={{ gap: '0.9rem' }}>
-                <div style={{ marginBottom: '0.2rem' }}>
-                  <h3 style={{ margin: '0 0 0.3rem', fontSize: '1.15rem' }}>Select Overleaf CV Template</h3>
+                <div>
+                  <h3 style={{ margin: '0 0 0.3rem', fontSize: '1.15rem' }}>Select Exact Overleaf CV Template</h3>
                   <p style={{ margin: 0, fontSize: '0.86rem', color: 'var(--ink-soft)' }}>
-                    Choose from top-rated Overleaf templates (Minimal Academic, ReCeIVe, TwentyOneSeconds, Jake's Resume).
+                    High-scoring LaTeX templates identical to your requested Overleaf designs.
                   </p>
                 </div>
 
-                <div className="grid" style={{ gap: '0.9rem' }}>
-                  {OVERLEAF_IMAGE_TEMPLATES.map((tmpl) => {
+                <div className="grid" style={{ gap: '0.85rem' }}>
+                  {EXACT_OVERLEAF_TEMPLATES.map((tmpl) => {
                     const isSelected = form.template === tmpl.id
                     return (
                       <div
                         key={tmpl.id}
                         onClick={() => setForm({ ...form, template: tmpl.id })}
                         style={{
-                          padding: '1.1rem',
+                          padding: '1rem',
                           borderRadius: '16px',
-                          border: isSelected
-                            ? `2px solid ${tmpl.accentColor}`
-                            : '1px solid var(--line)',
-                          background: isSelected
-                            ? `color-mix(in srgb, ${tmpl.accentColor} 8%, var(--bg-elevated))`
-                            : 'var(--bg-elevated)',
+                          border: isSelected ? `2px solid ${tmpl.accentColor}` : '1px solid var(--line)',
+                          background: isSelected ? `color-mix(in srgb, ${tmpl.accentColor} 8%, var(--bg-elevated))` : 'var(--bg-elevated)',
                           cursor: 'pointer',
                           transition: 'all 200ms ease',
-                          boxShadow: isSelected ? `0 6px 20px color-mix(in srgb, ${tmpl.accentColor} 20%, transparent)` : 'none',
                           position: 'relative',
                         }}
                       >
@@ -422,8 +388,8 @@ export function BuilderPage() {
                               position: 'absolute',
                               top: '12px',
                               right: '12px',
-                              width: '24px',
-                              height: '24px',
+                              width: '22px',
+                              height: '22px',
                               borderRadius: '50%',
                               background: tmpl.accentColor,
                               color: 'white',
@@ -434,32 +400,17 @@ export function BuilderPage() {
                             <Check size={14} />
                           </div>
                         )}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem' }}>
-                          <span
-                            style={{
-                              padding: '0.2rem 0.55rem',
-                              borderRadius: '999px',
-                              background: 'color-mix(in srgb, #10b981 14%, transparent)',
-                              color: '#059669',
-                              fontSize: '0.72rem',
-                              fontWeight: 800,
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              gap: '3px',
-                            }}
-                          >
-                            <Target size={12} /> {tmpl.badge}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.3rem' }}>
+                          <span style={{ padding: '0.18rem 0.5rem', borderRadius: '999px', background: 'color-mix(in srgb, #10b981 14%, transparent)', color: '#059669', fontSize: '0.72rem', fontWeight: 800 }}>
+                            <Target size={11} style={{ verticalAlign: 'middle', marginRight: '2px' }} /> {tmpl.badge}
                           </span>
-                          <span style={{ fontSize: '0.74rem', color: 'var(--ink-muted)' }}>By {tmpl.author}</span>
+                          <span style={{ fontSize: '0.74rem', color: 'var(--ink-muted)', fontWeight: 600 }}>{tmpl.subtitle}</span>
                         </div>
 
-                        <h4 style={{ margin: '0 0 0.25rem', fontSize: '1.08rem', color: isSelected ? tmpl.accentColor : 'inherit' }}>
+                        <h4 style={{ margin: '0 0 0.2rem', fontSize: '1.05rem', color: isSelected ? tmpl.accentColor : 'inherit' }}>
                           {tmpl.name}
                         </h4>
-                        <p style={{ margin: '0 0 0.45rem', fontSize: '0.78rem', color: 'var(--ink-muted)', fontWeight: 600 }}>
-                          Best for: {tmpl.bestFor}
-                        </p>
-                        <p style={{ margin: 0, fontSize: '0.84rem', color: 'var(--ink-soft)', lineHeight: 1.45 }}>
+                        <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--ink-soft)', lineHeight: 1.45 }}>
                           {tmpl.description}
                         </p>
                       </div>
@@ -484,7 +435,7 @@ export function BuilderPage() {
                     value={form.template}
                     onChange={(e) => setForm({ ...form, template: e.target.value as any })}
                   >
-                    {OVERLEAF_IMAGE_TEMPLATES.map((t) => (
+                    {EXACT_OVERLEAF_TEMPLATES.map((t) => (
                       <option key={t.id} value={t.id}>
                         {t.name} ({t.badge})
                       </option>
@@ -495,12 +446,12 @@ export function BuilderPage() {
                 <div className="grid grid-2">
                   {([
                     ['full_name', 'Full Name *'],
-                    ['title', 'Target Role Title (e.g. FULL STACK DEVELOPER)'],
+                    ['title', 'Job Title / Headline'],
                     ['email', 'Email Address *'],
-                    ['phone', 'Mobile Number'],
-                    ['location', 'Location (City, State, Country)'],
-                    ['linkedin', 'LinkedIn Handle (e.g. linkedin.com/in/janedoe)'],
-                    ['portfolio', 'Website / GitHub / LeetCode (e.g. jane-doe.com | GitHub)'],
+                    ['phone', 'Phone Number'],
+                    ['location', 'Address / Location'],
+                    ['linkedin', 'LinkedIn Handle'],
+                    ['portfolio', 'Website / GitHub'],
                   ] as const).map(([key, label]) => (
                     <Field key={key} label={label}>
                       <input
@@ -531,25 +482,19 @@ export function BuilderPage() {
                     }
                   />
                   <label htmlFor="show_photo" style={{ fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <ImageIcon size={14} /> Include Photo Frame Box on Top Right (Minimal Academic CV Template)
+                    <ImageIcon size={14} /> Include Profile Photo Avatar (Jack Sparrow Creative Template)
                   </label>
                 </div>
 
-                <Field label="Summary / Brief Profile Description">
+                <Field label="About Me / Summary">
                   <textarea
                     className="input"
                     rows={4}
-                    placeholder="Brief description of skills, experience, and development expertise..."
+                    placeholder="Brief description about yourself..."
                     value={form.summary}
                     onChange={(e) => setForm({ ...form, summary: e.target.value })}
                   />
                 </Field>
-
-                <div style={{ textAlign: 'right' }}>
-                  <Button variant="secondary" onClick={() => setTab('Experience')}>
-                    Next: Add Work Experience →
-                  </Button>
-                </div>
               </div>
             ) : null}
 
@@ -557,7 +502,7 @@ export function BuilderPage() {
             {tab === 'Experience' ? (
               <div className="grid">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <h4 style={{ margin: 0 }}>Work Experience</h4>
+                  <h4 style={{ margin: 0 }}>Experience</h4>
                   <Button
                     variant="secondary"
                     onClick={() =>
@@ -570,7 +515,7 @@ export function BuilderPage() {
                       })
                     }
                   >
-                    <Plus size={16} /> Add Position
+                    <Plus size={16} /> Add Experience
                   </Button>
                 </div>
 
@@ -579,7 +524,7 @@ export function BuilderPage() {
                     <div className="grid grid-2" style={{ marginBottom: '0.5rem' }}>
                       <input
                         className="input"
-                        placeholder="Job Title (e.g. Web Developer)"
+                        placeholder="Job Title (e.g. JOB TITLE)"
                         value={exp.position}
                         onChange={(e) => {
                           const experience = [...form.experience]
@@ -589,7 +534,7 @@ export function BuilderPage() {
                       />
                       <input
                         className="input"
-                        placeholder="Company Name (e.g. Anycompany)"
+                        placeholder="Company Name (e.g. The Cool Company)"
                         value={exp.company}
                         onChange={(e) => {
                           const experience = [...form.experience]
@@ -601,7 +546,7 @@ export function BuilderPage() {
                     <div className="grid grid-2" style={{ marginBottom: '0.5rem' }}>
                       <input
                         className="input"
-                        placeholder="Location (e.g. Remote — AnyCity, AnyState)"
+                        placeholder="Location / Division (e.g. Earth, Alpha quadrant)"
                         value={exp.description}
                         onChange={(e) => {
                           const experience = [...form.experience]
@@ -612,7 +557,7 @@ export function BuilderPage() {
                       <div className="grid grid-2" style={{ gap: '0.4rem' }}>
                         <input
                           className="input"
-                          placeholder="Start (e.g. Apr 2022)"
+                          placeholder="Start (e.g. 2020)"
                           value={exp.start_date}
                           onChange={(e) => {
                             const experience = [...form.experience]
@@ -622,7 +567,7 @@ export function BuilderPage() {
                         />
                         <input
                           className="input"
-                          placeholder="End (e.g. Present)"
+                          placeholder="End (e.g. 2023)"
                           value={exp.end_date}
                           onChange={(e) => {
                             const experience = [...form.experience]
@@ -645,12 +590,6 @@ export function BuilderPage() {
                     />
                   </div>
                 ))}
-
-                <div style={{ textAlign: 'right' }}>
-                  <Button variant="secondary" onClick={() => setTab('Education')}>
-                    Next: Add Education →
-                  </Button>
-                </div>
               </div>
             ) : null}
 
@@ -677,17 +616,7 @@ export function BuilderPage() {
                     <div className="grid grid-2" style={{ marginBottom: '0.5rem' }}>
                       <input
                         className="input"
-                        placeholder="University Name (e.g. University of AnyState)"
-                        value={ed.school}
-                        onChange={(e) => {
-                          const education = [...form.education]
-                          education[i] = { ...ed, school: e.target.value }
-                          setForm({ ...form, education })
-                        }}
-                      />
-                      <input
-                        className="input"
-                        placeholder="Degree (e.g. Bachelor of Science in Computer Science)"
+                        placeholder="Degree (e.g. MSc IN BREWING BEER)"
                         value={ed.degree}
                         onChange={(e) => {
                           const education = [...form.education]
@@ -695,21 +624,21 @@ export function BuilderPage() {
                           setForm({ ...form, education })
                         }}
                       />
+                      <input
+                        className="input"
+                        placeholder="School / University (e.g. Dutch Beer University)"
+                        value={ed.school}
+                        onChange={(e) => {
+                          const education = [...form.education]
+                          education[i] = { ...ed, school: e.target.value }
+                          setForm({ ...form, education })
+                        }}
+                      />
                     </div>
                     <div className="grid grid-2">
                       <input
                         className="input"
-                        placeholder="Date Range (e.g. Jan 2016 – Dec 2020)"
-                        value={ed.graduation_date}
-                        onChange={(e) => {
-                          const education = [...form.education]
-                          education[i] = { ...ed, graduation_date: e.target.value }
-                          setForm({ ...form, education })
-                        }}
-                      />
-                      <input
-                        className="input"
-                        placeholder="Location / Honors (e.g. AnyCity, AnyState)"
+                        placeholder="Location (e.g. Urk, The Netherlands)"
                         value={ed.field}
                         onChange={(e) => {
                           const education = [...form.education]
@@ -717,42 +646,31 @@ export function BuilderPage() {
                           setForm({ ...form, education })
                         }}
                       />
+                      <input
+                        className="input"
+                        placeholder="Dates (e.g. 2020-2023)"
+                        value={ed.graduation_date}
+                        onChange={(e) => {
+                          const education = [...form.education]
+                          education[i] = { ...ed, graduation_date: e.target.value }
+                          setForm({ ...form, education })
+                        }}
+                      />
                     </div>
                   </div>
                 ))}
-
-                <div style={{ textAlign: 'right' }}>
-                  <Button variant="secondary" onClick={() => setTab('Projects')}>
-                    Next: Add Projects →
-                  </Button>
-                </div>
               </div>
             ) : null}
 
             {/* TAB 5: PROJECTS */}
             {tab === 'Projects' ? (
               <div className="grid">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <h4 style={{ margin: 0 }}>Projects & Code Repositories</h4>
-                  <Button
-                    variant="secondary"
-                    onClick={() =>
-                      setForm({
-                        ...form,
-                        projects: [...form.projects, { name: '', technologies: '', description: '', link: '' }],
-                      })
-                    }
-                  >
-                    <Plus size={16} /> Add Project
-                  </Button>
-                </div>
-
                 {form.projects.map((project, i) => (
                   <div key={i} className="card" style={{ background: 'var(--bg-muted)', padding: '0.9rem', borderRadius: '14px' }}>
                     <div className="grid grid-2" style={{ marginBottom: '0.5rem' }}>
                       <input
                         className="input"
-                        placeholder="Project Name (e.g. Project 1)"
+                        placeholder="Project Name"
                         value={project.name}
                         onChange={(e) => {
                           const projects = [...form.projects]
@@ -762,7 +680,7 @@ export function BuilderPage() {
                       />
                       <input
                         className="input"
-                        placeholder="Technologies (e.g. React.js, Redux, PHP, MySQL)"
+                        placeholder="Technologies"
                         value={project.technologies}
                         onChange={(e) => {
                           const projects = [...form.projects]
@@ -773,8 +691,8 @@ export function BuilderPage() {
                     </div>
                     <textarea
                       className="input"
-                      rows={3}
-                      placeholder="Bullet points describing project..."
+                      rows={2}
+                      placeholder="Project description..."
                       value={project.description}
                       onChange={(e) => {
                         const projects = [...form.projects]
@@ -787,43 +705,36 @@ export function BuilderPage() {
               </div>
             ) : null}
 
-            {/* TAB 6: CERTIFICATIONS & SKILLS */}
-            {tab === 'Certifications & Skills' ? (
+            {/* TAB 6: SKILLS & CERTS */}
+            {tab === 'Skills & Certs' ? (
               <div className="grid">
-                <Field label="Certifications (One per line)">
+                <Field label="Technical Skills List (One category per line)">
+                  <textarea
+                    className="input"
+                    rows={4}
+                    placeholder="JavaScript, Python, React&#10;Express, FastAPI, PostgreSQL&#10;MongoDB, Docker, Git"
+                    value={form.skills.technical}
+                    onChange={(e) => setForm({ ...form, skills: { ...form.skills, technical: e.target.value } })}
+                  />
+                </Field>
+                <Field label="Certifications">
                   <textarea
                     className="input"
                     rows={3}
-                    placeholder="Certified Web Developer by the W3C&#10;Microsoft Certified: Azure Developer Associate&#10;AWS Certified Developer - Associate"
+                    placeholder="Certified Web Developer by W3C&#10;AWS Certified Solutions Architect"
                     value={form.certifications.join('\n')}
                     onChange={(e) => setForm({ ...form, certifications: e.target.value.split('\n') })}
-                  />
-                </Field>
-
-                <Field label="Technical Skills List (Categorized per line: Languages, Frameworks, Libraries, Databases, Dev Tools)">
-                  <textarea
-                    className="input"
-                    rows={6}
-                    placeholder="JavaScript, PHP, Java, HTML, CSS&#10;React.js, Angular, Express, Node.js&#10;Material, Redux, react-router&#10;MongoDB, PostgreSQL&#10;Visual Studio Code, Git, GitHub"
-                    value={form.skills.technical}
-                    onChange={(e) => setForm({ ...form, skills: { ...form.skills, technical: e.target.value } })}
                   />
                 </Field>
               </div>
             ) : null}
 
-            {/* TAB 7: LATEX SOURCE */}
+            {/* TAB 7: LATEX */}
             {tab === 'LaTeX Code' ? (
               <div className="grid">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <h4 style={{ margin: 0 }}>Compilable LaTeX Code (.tex)</h4>
-                  <Button variant="secondary" onClick={handleCopyLaTeX}>
-                    <Copy size={15} /> Copy LaTeX Code
-                  </Button>
-                </div>
                 <textarea
                   className="input"
-                  rows={16}
+                  rows={14}
                   readOnly
                   style={{ fontFamily: 'monospace', fontSize: '0.82rem', background: '#0f172a', color: '#f8fafc', padding: '1rem', borderRadius: '12px' }}
                   value={latexCode}
@@ -835,360 +746,365 @@ export function BuilderPage() {
           </Card>
         </FadeIn>
 
-        {/* RIGHT COLUMN: DYNAMIC LIVE OVERLEAF PREVIEW MATCHING THE SCREENSHOT */}
+        {/* RIGHT COLUMN: DYNAMIC LIVE PREVIEW MATCHING THE 5 SCREENSHOTS */}
         <FadeIn delay={0.08}>
           <div
             style={{
               background: '#ffffff',
               color: '#111827',
               minHeight: '800px',
-              padding: '2.5rem 2.2rem',
-              borderRadius: '12px',
-              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+              padding: selectedTemplate.id === 'JackSparrow' ? '0' : '2.4rem 2rem',
+              borderRadius: '14px',
+              boxShadow: '0 20px 45px rgba(0,0,0,0.15)',
               position: 'sticky',
               top: '1rem',
               fontFamily: selectedTemplate.fontFamily,
               fontSize: '13px',
               lineHeight: 1.4,
-              border: '1px solid #d1d5db',
+              border: '1px solid #cbd5e1',
+              overflow: 'hidden',
             }}
           >
-            {/* Template Title Pill */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.2rem', paddingBottom: '0.5rem', borderBottom: '1px dashed #cbd5e1' }}>
-              <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', color: selectedTemplate.accentColor }}>
-                OVERLEAF PREVIEW: {selectedTemplate.name.toUpperCase()}
-              </span>
-              <span style={{ fontSize: '0.72rem', color: '#64748b' }}>A4 Page Format</span>
-            </div>
-
-            {/* TEMPLATE 1: TwentyOneSeconds CV (Right in image) */}
-            {selectedTemplate.id === 'TwentyOneSeconds' && (
-              <div>
+            {/* 1. LEWIS VERSTAPPEN LEFT-MARGIN TEMPLATE (IMAGE 1) */}
+            {selectedTemplate.id === 'LewisVerstappen' && (
+              <div style={{ padding: '0.5rem' }}>
                 {/* Header */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.4rem' }}>
-                  <div>
-                    <h1 style={{ margin: 0, fontSize: '1.9rem', fontWeight: 700, color: '#000000', letterSpacing: '-0.02em' }}>
-                      {person.full_name || 'Jane Doe'}
-                    </h1>
-                    <p style={{ margin: '2px 0 0', fontSize: '0.78rem', color: '#3b82f6' }}>
-                      {[person.portfolio || 'jane-doe.com', 'LinkedIn', 'GitHub', 'LeetCode'].join(' | ')}
-                    </p>
+                <div style={{ marginBottom: '1.5rem', paddingLeft: '140px', position: 'relative' }}>
+                  <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '2px', background: '#000000' }} />
+                  <h1 style={{ margin: 0, fontSize: '2.2rem', fontWeight: 300, color: '#475569', letterSpacing: '0.25em', lineHeight: 1 }}>
+                    LEWIS
+                  </h1>
+                  <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 700, color: '#1e293b', letterSpacing: '0.12em', lineHeight: 1.1 }}>
+                    VERSTAPPEN
+                  </h1>
+                </div>
+
+                {/* CONTACT INFO */}
+                <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem', marginBottom: '1.2rem' }}>
+                  <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
+                    CONTACT INFO
                   </div>
-                  <div style={{ textAlign: 'right', fontSize: '0.75rem', color: '#374151' }}>
-                    <div>Location: {person.location || 'Anycity, Anystate, Anycountry'}</div>
-                    <div>Email: {person.email || 'jane.doe@email.com'} | Mobile: {person.phone || '5555555555'}</div>
+                  <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
+                    <table style={{ width: '100%', fontSize: '0.8rem', borderCollapse: 'collapse' }}>
+                      <tbody>
+                        <tr>
+                          <td style={{ width: '90px', fontWeight: 700, padding: '2px 0', color: '#1e293b' }}>E-mail</td>
+                          <td style={{ color: '#64748b' }}>{person.email || 'youremail@email.com'}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ fontWeight: 700, padding: '2px 0', color: '#1e293b' }}>Phone Nr</td>
+                          <td style={{ color: '#64748b' }}>{person.phone || '+31 6 69696969'}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ fontWeight: 700, padding: '2px 0', color: '#1e293b' }}>Address</td>
+                          <td style={{ color: '#64748b' }}>{person.location || 'Street 185, 1234IJ, City Name, Morocco'}</td>
+                        </tr>
+                        <tr>
+                          <td style={{ fontWeight: 700, padding: '2px 0', color: '#1e293b' }}>LinkedIn</td>
+                          <td style={{ color: '#64748b' }}>{person.linkedin || 'linkedin.com/in/username'}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
 
-                <div style={{ marginTop: '0.6rem', marginBottom: '0.8rem' }}>
-                  <h3 style={{ margin: 0, fontSize: '0.86rem', fontWeight: 800, textTransform: 'uppercase', color: '#111827', letterSpacing: '0.04em' }}>
-                    {person.title || 'FULL STACK DEVELOPER'}
-                  </h3>
-                  <p style={{ margin: '0.3rem 0 0', fontSize: '0.8rem', color: '#374151', lineHeight: 1.45 }}>
-                    {form.summary}
-                  </p>
-                </div>
-
-                {/* TECHNICAL SKILLS TABLE */}
-                <div style={{ marginBottom: '0.9rem' }}>
-                  <h4 style={{ margin: '0 0 0.3rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000000', paddingBottom: '2px' }}>
-                    TECHNICAL SKILLS
-                  </h4>
-                  <table style={{ width: '100%', fontSize: '0.78rem', borderCollapse: 'collapse' }}>
-                    <tbody>
-                      <tr>
-                        <td style={{ width: '110px', fontWeight: 700, verticalAlign: 'top', padding: '1px 0' }}>Languages</td>
-                        <td style={{ padding: '1px 0' }}>: {skillsRows[0] || 'JavaScript, PHP, Java, HTML, CSS'}</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: 700, verticalAlign: 'top', padding: '1px 0' }}>Frameworks</td>
-                        <td style={{ padding: '1px 0' }}>: {skillsRows[1] || 'React.js, Angular, Express, Node.js'}</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: 700, verticalAlign: 'top', padding: '1px 0' }}>Libraries</td>
-                        <td style={{ padding: '1px 0' }}>: {skillsRows[2] || 'Material, Redux, react-router'}</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: 700, verticalAlign: 'top', padding: '1px 0' }}>Databases</td>
-                        <td style={{ padding: '1px 0' }}>: {skillsRows[3] || 'MongoDB, PostgreSQL'}</td>
-                      </tr>
-                      <tr>
-                        <td style={{ fontWeight: 700, verticalAlign: 'top', padding: '1px 0' }}>Dev Tools</td>
-                        <td style={{ padding: '1px 0' }}>: {skillsRows[4] || 'Visual Studio Code, Git, GitHub'}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+                {/* ABOUT ME */}
+                {form.summary && (
+                  <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem', marginBottom: '1.2rem' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
+                      ABOUT ME
+                    </div>
+                    <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
+                      <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b', lineHeight: 1.5 }}>
+                        {form.summary}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 {/* EXPERIENCE */}
-                <div style={{ marginBottom: '0.9rem' }}>
-                  <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000000', paddingBottom: '2px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem', marginBottom: '1.2rem' }}>
+                  <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
                     EXPERIENCE
-                  </h4>
-                  {form.experience.map((exp, idx) => (
-                    <div key={idx} style={{ marginBottom: '0.65rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                        <strong style={{ fontSize: '0.83rem', color: '#000000' }}>{exp.position || 'Web Developer'}</strong>
-                        <span style={{ fontSize: '0.76rem', fontWeight: 700 }}>{exp.start_date || 'Apr 2022'} – {exp.end_date || 'Present'}</span>
-                      </div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: '0.78rem', color: '#4b5563', fontStyle: 'italic', marginBottom: '3px' }}>
-                        <span>{exp.company || 'Anycompany'}</span>
-                        <span>{exp.description || 'Remote — AnyCity, AnyState'}</span>
-                      </div>
-                      <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#1f2937' }}>
-                        {splitList(exp.responsibilities).map((b, bIdx) => (
-                          <li key={bIdx} style={{ marginBottom: '1px' }}>{b}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-
-                {/* EDUCATION */}
-                <div style={{ marginBottom: '0.9rem' }}>
-                  <h4 style={{ margin: '0 0 0.3rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000000', paddingBottom: '2px' }}>
-                    EDUCATION
-                  </h4>
-                  {form.education.map((ed, idx) => (
-                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: '0.78rem' }}>
-                      <div>
-                        <strong style={{ display: 'block', color: '#000' }}>{ed.school || 'University of AnyState'}</strong>
-                        <span style={{ fontStyle: 'italic', color: '#4b5563' }}>{ed.degree || 'Bachelor of Science in Computer Science'}</span>
-                      </div>
-                      <div style={{ textAlign: 'right' }}>
-                        <div>{ed.field || 'Anycity, Anystate, Anycountry'}</div>
-                        <div style={{ fontWeight: 700 }}>{ed.graduation_date || 'Jan 2016 – Dec 2020'}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* PROJECTS */}
-                {form.projects.some((p) => p.name) && (
-                  <div style={{ marginBottom: '0.9rem' }}>
-                    <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000000', paddingBottom: '2px' }}>
-                      PROJECTS
-                    </h4>
-                    {form.projects.map((proj, idx) => (
-                      <div key={idx} style={{ marginBottom: '0.5rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontSize: '0.78rem' }}>
-                          <div>
-                            <strong style={{ color: '#000' }}>{proj.name || 'Project'}</strong>
-                            <span style={{ color: '#4b5563', fontStyle: 'italic', marginLeft: '8px' }}>{proj.technologies}</span>
-                          </div>
-                          <span style={{ color: '#2563eb', fontWeight: 700, fontSize: '0.74rem' }}>{proj.link || 'Source Code'}</span>
+                  </div>
+                  <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
+                    {form.experience.map((exp, idx) => (
+                      <div key={idx} style={{ marginBottom: '0.8rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                          <strong style={{ fontSize: '0.84rem', color: '#000000', letterSpacing: '0.04em' }}>
+                            {exp.position || 'JOB TITLE'}
+                          </strong>
+                          <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>
+                            {exp.start_date || '2020'}-{exp.end_date || '2023'}
+                          </span>
                         </div>
-                        <ul style={{ margin: '2px 0 0', paddingLeft: '1.1rem', fontSize: '0.76rem', color: '#1f2937' }}>
-                          {splitList(proj.description).map((b, bIdx) => (
+                        <div style={{ fontSize: '0.8rem', color: '#64748b', fontStyle: 'italic', marginBottom: '4px' }}>
+                          {exp.company || 'The Cool Company'} | {exp.description || 'Earth, Alpha quadrant'}
+                        </div>
+                        <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.78rem', color: '#64748b' }}>
+                          {splitList(exp.responsibilities).map((b, bIdx) => (
                             <li key={bIdx}>{b}</li>
                           ))}
                         </ul>
                       </div>
                     ))}
                   </div>
-                )}
-
-                {/* CERTIFICATIONS */}
-                {form.certifications.length > 0 && form.certifications[0] && (
-                  <div>
-                    <h4 style={{ margin: '0 0 0.3rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000000', paddingBottom: '2px' }}>
-                      CERTIFICATIONS
-                    </h4>
-                    <ul style={{ margin: 0, paddingLeft: '1.1rem', fontSize: '0.76rem', color: '#1f2937' }}>
-                      {form.certifications.filter(Boolean).map((cert, idx) => (
-                        <li key={idx}>{cert}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* TEMPLATE 2: Minimal Academic CV Template (Left in image) */}
-            {selectedTemplate.id === 'MinimalAcademic' && (
-              <div>
-                {/* Header with optional Image box on top right */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.2rem' }}>
-                  <div>
-                    <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 700, color: '#000000', fontFamily: 'Georgia, serif' }}>
-                      {person.full_name || 'Jane Doe'}
-                    </h1>
-                    <p style={{ margin: '0.3rem 0', fontSize: '0.78rem', color: '#4b5563' }}>
-                      01.01.1990, Born in Sample, Sampleland<br />
-                      Samplestreet 1<br />
-                      1000 Samplecity<br />
-                      012 345 67 89<br />
-                      <span style={{ color: '#2563eb' }}>{person.email || 'sample@sample.com'}</span>
-                    </p>
-                  </div>
-                  {/* Photo Frame Box from screenshot */}
-                  <div
-                    style={{
-                      width: '100px',
-                      height: '100px',
-                      border: '1px solid #94a3b8',
-                      background: '#f1f5f9',
-                      display: 'grid',
-                      placeItems: 'center',
-                      fontSize: '0.78rem',
-                      color: '#64748b',
-                    }}
-                  >
-                    Image
-                  </div>
                 </div>
 
                 {/* EDUCATION */}
-                <div style={{ marginBottom: '1.2rem' }}>
-                  <h4 style={{ margin: '0 0 0.6rem', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1.5px solid #000000', paddingBottom: '2px', letterSpacing: '0.05em' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '1rem' }}>
+                  <div style={{ fontWeight: 800, fontSize: '0.82rem', letterSpacing: '0.05em', color: '#1e293b', paddingTop: '2px' }}>
                     EDUCATION
-                  </h4>
-                  {form.education.map((ed, idx) => (
-                    <div key={idx} style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '0.8rem', marginBottom: '0.6rem', fontSize: '0.8rem' }}>
-                      <div style={{ fontStyle: 'italic', color: '#4b5563' }}>{ed.graduation_date || 'S.2018 - date'}</div>
-                      <div>
-                        <strong>{ed.degree || 'Master of Sample Science'} at {ed.school || 'Sample Uni'}</strong>
-                        <div style={{ fontSize: '0.76rem', color: '#64748b', fontStyle: 'italic' }}>Focus on sample topics</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* WORK EXPERIENCE */}
-                <div style={{ marginBottom: '1.2rem' }}>
-                  <h4 style={{ margin: '0 0 0.6rem', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1.5px solid #000000', paddingBottom: '2px', letterSpacing: '0.05em' }}>
-                    WORK EXPERIENCE
-                  </h4>
-                  {form.experience.map((exp, idx) => (
-                    <div key={idx} style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: '0.8rem', marginBottom: '0.6rem', fontSize: '0.8rem' }}>
-                      <div style={{ fontStyle: 'italic', color: '#4b5563' }}>{exp.start_date || 'S.2017'} – {exp.end_date || 'S.2018'}</div>
-                      <div>
-                        <strong>{exp.position || 'Sample Internship'} at {exp.company || 'Sample AG'}</strong>
-                        <ul style={{ margin: '4px 0 0', paddingLeft: '1.1rem', fontSize: '0.76rem' }}>
-                          {splitList(exp.responsibilities).map((b, bIdx) => (
-                            <li key={bIdx}>{b}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* SKILLS AND QUALIFICATIONS */}
-                <div style={{ marginBottom: '1.2rem' }}>
-                  <h4 style={{ margin: '0 0 0.6rem', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1.5px solid #000000', paddingBottom: '2px', letterSpacing: '0.05em' }}>
-                    SKILLS AND QUALIFICATIONS
-                  </h4>
-                  <div style={{ fontSize: '0.8rem' }}>
-                    <strong>Programming Languages</strong>
-                    <div style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '0.5rem', marginTop: '4px', fontSize: '0.76rem', color: '#4b5563' }}>
-                      <div>Advanced skills</div>
-                      <div>{form.skills.technical.split('\n')[0] || 'JavaScript, Python'}</div>
-                      <div>Basic skills</div>
-                      <div>{form.skills.technical.split('\n')[1] || 'C++, Rust'}</div>
-                    </div>
                   </div>
-                </div>
-
-                {/* INTERESTS */}
-                <div>
-                  <h4 style={{ margin: '0 0 0.6rem', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1.5px solid #000000', paddingBottom: '2px', letterSpacing: '0.05em' }}>
-                    INTERESTS
-                  </h4>
-                  <p style={{ margin: 0, fontSize: '0.78rem', color: '#4b5563' }}>Sample Interests, Academic Research, Machine Learning</p>
+                  <div style={{ borderTop: '1px solid #000', paddingTop: '0.4rem' }}>
+                    {form.education.map((ed, idx) => (
+                      <div key={idx} style={{ marginBottom: '0.8rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                          <strong style={{ fontSize: '0.84rem', color: '#000000', letterSpacing: '0.04em' }}>
+                            {ed.degree || 'MSc IN BREWING BEER'}
+                          </strong>
+                          <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>
+                            {ed.graduation_date || '2020-2023'}
+                          </span>
+                        </div>
+                        <div style={{ fontSize: '0.8rem', color: '#64748b', fontStyle: 'italic' }}>
+                          {ed.school || 'Dutch Beer University'} | {ed.field || 'Urk, The Netherlands'}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* TEMPLATE 3: ReCeIVe Centered CV (Center in image) */}
-            {selectedTemplate.id === 'ReCeIVe' && (
-              <div style={{ textAlign: 'center' }}>
-                <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 600, color: '#1e3a8a', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                  {person.full_name || 'YOUR NAME'}
-                </h1>
-                <p style={{ margin: '0.4rem 0', fontSize: '0.78rem', color: '#2563eb' }}>
-                  Address, YY, XX — <span style={{ textDecoration: 'underline' }}>{person.email || 'email@address.com'}</span> — mywebsite.com
-                </p>
-                <p style={{ margin: '0 0 1.2rem', fontSize: '0.8rem', color: '#374151', fontStyle: 'italic', maxWidth: '85%', marginLeft: 'auto', marginRight: 'auto' }}>
-                  {form.summary || 'My brief description. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, fermentum a, justo.'}
-                </p>
-
-                {/* Technical Skills */}
-                <div style={{ textAlign: 'left', marginBottom: '1.1rem' }}>
-                  <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.85rem', fontWeight: 700, color: '#1e3a8a', textTransform: 'none' }}>
-                    Technical Skills
-                  </h4>
-                  <div style={{ fontSize: '0.78rem', lineHeight: 1.5, color: '#374151' }}>
-                    <div><strong>Programming skills — </strong> {skillsRows[0] || 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'}</div>
-                    <div><strong>Data Analysis — </strong> {skillsRows[1] || 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'}</div>
-                    <div><strong>Visualization — </strong> {skillsRows[2] || 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'}</div>
-                  </div>
+            {/* 2. JACK SPARROW TWENTYSECONDS CREATIVE TEMPLATE (IMAGE 2) */}
+            {selectedTemplate.id === 'JackSparrow' && (
+              <div>
+                {/* Top Dark Bar */}
+                <div style={{ background: '#334155', color: '#ffffff', padding: '1.2rem', textAlign: 'center' }}>
+                  <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 600 }}>
+                    Jack <span style={{ fontWeight: 800 }}>Sparrow</span>
+                  </h1>
+                  <p style={{ margin: '2px 0 0', fontSize: '0.84rem', opacity: 0.85 }}>Captain</p>
                 </div>
 
-                {/* Core Competencies */}
-                <div style={{ textAlign: 'left', marginBottom: '1.1rem' }}>
-                  <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.85rem', fontWeight: 700, color: '#1e3a8a', textTransform: 'none' }}>
-                    Core Competencies
-                  </h4>
-                  <div style={{ fontSize: '0.78rem', lineHeight: 1.5, color: '#374151' }}>
-                    <div><strong>Leadership — </strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
-                    <div><strong>Problem-solving — </strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
-                    <div><strong>Communication — </strong> Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</div>
-                  </div>
-                </div>
-
-                {/* Positions */}
-                <div style={{ textAlign: 'left', marginBottom: '1.1rem' }}>
-                  <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.85rem', fontWeight: 700, color: '#1e3a8a', textTransform: 'none' }}>
-                    Positions
-                  </h4>
-                  {form.experience.map((exp, idx) => (
-                    <div key={idx} style={{ marginBottom: '0.6rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', fontWeight: 700, color: '#1e3a8a' }}>
-                        <span>{exp.position || 'First Position'} — {exp.company || 'XYZ Institute'}</span>
-                        <span>{exp.start_date || 'XX 2000'} — {exp.end_date || 'Present'}</span>
-                      </div>
-                      <p style={{ margin: '2px 0 0', fontSize: '0.78rem', color: '#374151' }}>{exp.responsibilities || 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.'}</p>
+                <div style={{ display: 'grid', gridTemplateColumns: '170px 1fr', minHeight: '700px' }}>
+                  {/* Left Sidebar */}
+                  <div style={{ background: '#f1f5f9', padding: '1rem', borderRight: '1px solid #e2e8f0' }}>
+                    {/* Avatar Circle */}
+                    <div
+                      style={{
+                        width: '90px',
+                        height: '90px',
+                        borderRadius: '50%',
+                        background: '#cbd5e1',
+                        margin: '0 auto 1rem',
+                        overflow: 'hidden',
+                        border: '2px solid #0284c7',
+                        display: 'grid',
+                        placeItems: 'center',
+                        fontSize: '0.72rem',
+                        color: '#475569',
+                      }}
+                    >
+                      Photo
                     </div>
-                  ))}
+
+                    <div style={{ background: '#0284c7', color: 'white', padding: '0.15rem 0.4rem', fontSize: '0.72rem', fontWeight: 700, borderRadius: '2px', marginBottom: '0.3rem', display: 'inline-block' }}>
+                      About me
+                    </div>
+                    <p style={{ margin: '0 0 0.8rem', fontSize: '0.72rem', color: '#475569', lineHeight: 1.35 }}>
+                      {form.summary || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'}
+                    </p>
+
+                    <div style={{ background: '#0284c7', color: 'white', padding: '0.15rem 0.4rem', fontSize: '0.72rem', fontWeight: 700, borderRadius: '2px', marginBottom: '0.3rem', display: 'inline-block' }}>
+                      Personal
+                    </div>
+                    <p style={{ margin: '0 0 0.8rem', fontSize: '0.72rem', color: '#475569' }}>
+                      Jack Sparrow<br />Nationality: English
+                    </p>
+
+                    <div style={{ background: '#0284c7', color: 'white', padding: '0.15rem 0.4rem', fontSize: '0.72rem', fontWeight: 700, borderRadius: '2px', marginBottom: '0.3rem', display: 'inline-block' }}>
+                      Specialization
+                    </div>
+                    <p style={{ margin: '0 0 0.8rem', fontSize: '0.72rem', color: '#475569' }}>
+                      Privateering • Buccaneering
+                    </p>
+                  </div>
+
+                  {/* Right Main Area */}
+                  <div style={{ padding: '1.2rem' }}>
+                    <h4 style={{ margin: '0 0 0.5rem', fontSize: '0.84rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000', paddingBottom: '2px' }}>
+                      SHORT RESUMÉ
+                    </h4>
+                    {form.experience.map((exp, idx) => (
+                      <div key={idx} style={{ display: 'grid', gridTemplateColumns: '70px 1fr', gap: '0.5rem', marginBottom: '0.6rem', fontSize: '0.78rem' }}>
+                        <div style={{ fontWeight: 700, color: '#475569' }}>{exp.start_date || '2018-2021'}</div>
+                        <div>
+                          <strong>{exp.position || 'Captain of the Black Pearl'}</strong>
+                          <div style={{ fontSize: '0.74rem', color: '#64748b' }}>{exp.company || 'LEAD • East Indies'}</div>
+                          <p style={{ margin: '2px 0 0', fontSize: '0.74rem' }}>{exp.responsibilities}</p>
+                        </div>
+                      </div>
+                    ))}
+
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1rem' }}>
+                      <div>
+                        <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000', paddingBottom: '2px' }}>
+                          DEGREES
+                        </h4>
+                        {form.education.map((ed, idx) => (
+                          <div key={idx} style={{ fontSize: '0.76rem', marginBottom: '0.4rem' }}>
+                            <strong>{ed.degree}</strong>
+                            <div style={{ color: '#64748b' }}>{ed.school}</div>
+                          </div>
+                        ))}
+                      </div>
+
+                      <div>
+                        <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000', paddingBottom: '2px' }}>
+                          PROGRAMMING
+                        </h4>
+                        {skillsRows.slice(0, 4).map((skill, idx) => (
+                          <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.74rem', marginBottom: '3px' }}>
+                            <span style={{ background: '#e2e8f0', padding: '1px 4px', borderRadius: '3px' }}>{skill}</span>
+                            <div style={{ width: '60px', height: '6px', background: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
+                              <div style={{ width: `${85 - idx * 15}%`, height: '100%', background: '#0284c7' }} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 3. JANE DOE TWENTYONESECONDS DEVELOPER (IMAGE 3) */}
+            {selectedTemplate.id === 'JaneDoe' && (
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.4rem' }}>
+                  <div>
+                    <h1 style={{ margin: 0, fontSize: '1.9rem', fontWeight: 700, color: '#000000' }}>{person.full_name || 'Jane Doe'}</h1>
+                    <p style={{ margin: '2px 0 0', fontSize: '0.78rem', color: '#2563eb' }}>jane-doe.com | LinkedIn | GitHub | Leetcode</p>
+                  </div>
+                  <div style={{ textAlign: 'right', fontSize: '0.75rem', color: '#374151' }}>
+                    <div>Location: {person.location || 'Anycity, Anystate, Anycountry'}</div>
+                    <div>Email: {person.email || 'jane.doe@anysite.com'} | Mobile: {person.phone || '5555555555'}</div>
+                  </div>
                 </div>
 
-                {/* Education */}
-                <div style={{ textAlign: 'left' }}>
-                  <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.85rem', fontWeight: 700, color: '#1e3a8a', textTransform: 'none' }}>
+                <h3 style={{ margin: '0.6rem 0 0.3rem', fontSize: '0.86rem', fontWeight: 800, color: '#2563eb', textTransform: 'uppercase' }}>
+                  {person.title || 'FULL STACK DEVELOPER'}
+                </h3>
+                <p style={{ margin: '0 0 0.8rem', fontSize: '0.8rem', color: '#374151' }}>{form.summary}</p>
+
+                <h4 style={{ margin: '0 0 0.3rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000', paddingBottom: '2px' }}>
+                  TECHNICAL SKILLS
+                </h4>
+                <table style={{ width: '100%', fontSize: '0.78rem', marginBottom: '0.8rem' }}>
+                  <tbody>
+                    <tr><td style={{ width: '100px', fontWeight: 700 }}>Languages</td><td>: {skillsRows[0] || 'JavaScript, PHP, Java, HTML, CSS'}</td></tr>
+                    <tr><td style={{ fontWeight: 700 }}>Frameworks</td><td>: {skillsRows[1] || 'React.js, Angular, Express, Node.js'}</td></tr>
+                    <tr><td style={{ fontWeight: 700 }}>Libraries</td><td>: {skillsRows[2] || 'Material, Redux, React Router'}</td></tr>
+                    <tr><td style={{ fontWeight: 700 }}>Databases</td><td>: {skillsRows[3] || 'MongoDB, PostgreSQL'}</td></tr>
+                    <tr><td style={{ fontWeight: 700 }}>Dev Tools</td><td>: {skillsRows[4] || 'Visual Studio Code, Git, Gitlab'}</td></tr>
+                  </tbody>
+                </table>
+
+                <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000', paddingBottom: '2px' }}>
+                  EXPERIENCE
+                </h4>
+                {form.experience.map((exp, idx) => (
+                  <div key={idx} style={{ marginBottom: '0.6rem', fontSize: '0.78rem' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
+                      <span>{exp.position}</span>
+                      <span>{exp.start_date} – {exp.end_date}</span>
+                    </div>
+                    <div style={{ fontStyle: 'italic', color: '#4b5563', marginBottom: '2px' }}>{exp.company} | {exp.description}</div>
+                    <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
+                      {splitList(exp.responsibilities).map((b, bIdx) => (
+                        <li key={bIdx}>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* 4. CARL JOHNSON CLASSIC ACADEMIC SERIF (IMAGE 5) */}
+            {selectedTemplate.id === 'CarlJohnson' && (
+              <div style={{ textAlign: 'center', fontFamily: 'Georgia, serif' }}>
+                <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 700, color: '#1d4ed8' }}>
+                  Carl Johnson (CJ)
+                </h1>
+                <p style={{ margin: '0.3rem 0', fontSize: '0.78rem', color: '#1e40af', fontStyle: 'italic' }}>
+                  Residence/domicile: 113, Groove Street<br />
+                  E-mail: pleasedonotcontactme@gmail.com ✻ Telephone number: +1-202-555-0100<br />
+                  Place of birth: Ariccia, Italy ✻ Date of birth: 08-11-1968
+                </p>
+
+                <div style={{ textAlign: 'left', marginTop: '1.2rem' }}>
+                  <h4 style={{ margin: '0 0 0.5rem', fontSize: '0.88rem', fontWeight: 700, color: '#1d4ed8', fontStyle: 'italic', borderBottom: '1px solid #93c5fd', paddingBottom: '2px' }}>
                     Education
                   </h4>
                   {form.education.map((ed, idx) => (
-                    <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.78rem', marginBottom: '0.3rem' }}>
-                      <span>{ed.degree || 'Ph.D. in YYY'} — {ed.school || 'XYZ University, CT'}</span>
-                      <span style={{ fontWeight: 700 }}>{ed.graduation_date || 'XX 2000 — YY XXXX'}</span>
+                    <div key={idx} style={{ marginBottom: '0.7rem', fontSize: '0.8rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
+                        <span>{ed.degree || "Master's degree in Memeology and Unicorn Analytics"}</span>
+                        <span>{ed.school || 'Faber College'}</span>
+                      </div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontStyle: 'italic', color: '#4b5563', fontSize: '0.76rem' }}>
+                        <span>Master's degree program</span>
+                        <span>{ed.graduation_date || 'February 2019 - April 2020'}</span>
+                      </div>
                     </div>
                   ))}
-                </div>
-              </div>
-            )}
 
-            {/* TEMPLATE 4: Jake's Resume */}
-            {selectedTemplate.id === 'JakesResume' && (
-              <div style={{ textAlign: 'center' }}>
-                <h1 style={{ margin: 0, fontSize: '1.8rem', fontWeight: 800, textTransform: 'uppercase' }}>{person.full_name || 'ALEX RIVERS'}</h1>
-                <p style={{ margin: '0.3rem 0', fontSize: '0.8rem', color: '#4b5563' }}>{[person.email, person.phone, person.location].filter(Boolean).join(' | ')}</p>
-                <div style={{ height: '1.5px', background: '#000', margin: '0.5rem 0 1rem' }} />
-                <div style={{ textAlign: 'left' }}>
-                  <h4 style={{ margin: '0 0 0.4rem', fontSize: '0.82rem', fontWeight: 800, textTransform: 'uppercase', borderBottom: '1px solid #000', paddingBottom: '2px' }}>
-                    EXPERIENCE
+                  <h4 style={{ margin: '1rem 0 0.5rem', fontSize: '0.88rem', fontWeight: 700, color: '#1d4ed8', fontStyle: 'italic', borderBottom: '1px solid #93c5fd', paddingBottom: '2px' }}>
+                    Work experience
                   </h4>
                   {form.experience.map((exp, idx) => (
-                    <div key={idx} style={{ marginBottom: '0.6rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, fontSize: '0.82rem' }}>
-                        <span>{exp.position} — {exp.company}</span>
-                        <span>{exp.start_date} – {exp.end_date}</span>
+                    <div key={idx} style={{ marginBottom: '0.7rem', fontSize: '0.8rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700 }}>
+                        <span>{exp.company || 'Dank Memes Inc.'}</span>
+                        <span>{exp.start_date} - {exp.end_date}</span>
                       </div>
-                      <ul style={{ margin: '3px 0 0', paddingLeft: '1.1rem', fontSize: '0.78rem' }}>
+                      <div style={{ fontStyle: 'italic', color: '#1e40af', fontSize: '0.78rem' }}>
+                        {exp.position}
+                      </div>
+                      <ul style={{ margin: '3px 0 0', paddingLeft: '1.1rem', fontSize: '0.76rem', color: '#374151' }}>
                         {splitList(exp.responsibilities).map((b, bIdx) => (
                           <li key={bIdx}>{b}</li>
                         ))}
                       </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* 5. RECEIVE CLASSIC CENTERED (IMAGE 4) */}
+            {selectedTemplate.id === 'ReCeIVe' && (
+              <div style={{ textAlign: 'center' }}>
+                <h1 style={{ margin: 0, fontSize: '1.8rem', color: '#1e3a8a', letterSpacing: '0.06em' }}>
+                  {person.full_name || 'YOUR NAME'}
+                </h1>
+                <p style={{ margin: '0.4rem 0', fontSize: '0.78rem', color: '#2563eb' }}>
+                  Address, YY, XX · email@address.com · mywebsite.com
+                </p>
+                <p style={{ margin: '0 0 1rem', fontSize: '0.8rem', color: '#374151', fontStyle: 'italic' }}>
+                  {form.summary}
+                </p>
+                <div style={{ textAlign: 'left', fontSize: '0.78rem' }}>
+                  <h4 style={{ margin: '0 0 0.4rem', color: '#1e3a8a', borderBottom: '1px solid #cbd5e1', paddingBottom: '2px' }}>Positions</h4>
+                  {form.experience.map((exp, idx) => (
+                    <div key={idx} style={{ marginBottom: '0.5rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 700, color: '#1e3a8a' }}>
+                        <span>{exp.position} — {exp.company}</span>
+                        <span>{exp.start_date} — {exp.end_date}</span>
+                      </div>
+                      <p style={{ margin: 0, fontSize: '0.76rem' }}>{exp.responsibilities}</p>
                     </div>
                   ))}
                 </div>
