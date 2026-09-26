@@ -4,7 +4,6 @@ export function cn(...parts: Array<string | false | null | undefined>) {
 
 const API_BASE = import.meta.env.VITE_API_URL || '/api'
 
-// Fallback datasets for cloud/demo deployments (e.g. Vercel) where local Python backend isn't running
 export const FALLBACK_ROLES: Record<string, Record<string, { description: string; required_skills: string[] }>> = {
   'Software Engineering': {
     'Frontend Engineer': {
@@ -123,54 +122,14 @@ const FALLBACK_JOBS_META = {
 
 const STORAGE_KEY_TRACKER = 'student_hub_tracker_apps'
 
-function getLocalTrackerApps() {
+function getLocalTrackerApps(): any[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY_TRACKER)
     if (raw) return JSON.parse(raw)
   } catch {
     // fallback
   }
-  const defaultApps = [
-    {
-      id: 1,
-      company: 'Stripe',
-      role_title: 'Frontend Engineer Intern',
-      stage: 'Saved',
-      location: 'Remote',
-      workplace_type: 'Remote',
-      salary: '₹80,000 / mo',
-      priority: 'High',
-      notes: 'Submitted via student portal referral.',
-    },
-    {
-      id: 2,
-      company: 'Razorpay',
-      role_title: 'Full Stack Engineer',
-      stage: 'Applied',
-      location: 'Bangalore',
-      workplace_type: 'Hybrid',
-      salary: '₹16 LPA',
-      priority: 'High',
-      notes: 'First round technical test scheduled next week.',
-    },
-    {
-      id: 3,
-      company: 'CRED',
-      role_title: 'Backend Developer',
-      stage: 'Interviewing',
-      location: 'Bangalore',
-      workplace_type: 'On-site',
-      salary: '₹22 LPA',
-      priority: 'High',
-      notes: 'Passed system design interview. Awaiting HR discussion.',
-    },
-  ]
-  try {
-    localStorage.setItem(STORAGE_KEY_TRACKER, JSON.stringify(defaultApps))
-  } catch {
-    // ignore
-  }
-  return defaultApps
+  return []
 }
 
 function saveLocalTrackerApps(apps: any[]) {
@@ -213,16 +172,11 @@ function getFallbackDashboardResponse() {
   const interview_rate = total ? Math.round(((interviewing + offer) / total) * 100) : 0
 
   return {
-    resumes: 5,
-    analyses: 8,
-    average_ats: 84.5,
-    average_keyword: 78.2,
-    recent_scores: [
-      { date: '2026-09-26', score: 88 },
-      { date: '2026-09-24', score: 82 },
-      { date: '2026-09-20', score: 75 },
-      { date: '2026-09-15', score: 68 },
-    ],
+    resumes: 0,
+    analyses: 0,
+    average_ats: 0,
+    average_keyword: 0,
+    recent_scores: [],
     pipeline: {
       total,
       applied,
@@ -249,29 +203,26 @@ function getFallbackJobSearchResponse(title: string, location: string) {
 
 function getFallbackSummaryResponse(text: string, _mode: string, length: string) {
   const words = text ? text.trim().split(/\s+/).filter(Boolean) : []
-  const wordCount = words.length || 240
-  const summaryLength = length === 'short' ? 45 : length === 'detailed' ? 120 : 80
-  const snippet = text.trim() ? text.slice(0, 260) : 'Lecture notes on core architecture, scalable system design, API design patterns, and database optimizations.'
+  const wordCount = words.length || 0
+  const summaryLength = length === 'short' ? 30 : length === 'detailed' ? 90 : 60
+  const snippet = text.trim() ? text.slice(0, 260) : 'Study material overview.'
 
   return {
     source: 'Submitted Material',
-    summary: `Executive Summary: ${snippet}... Key concepts emphasize structured software design, efficient resource utilization, and scalable architecture.`,
+    summary: `Summary: ${snippet}`,
     bullets: [
-      'Core architecture patterns and foundational design concepts principles.',
-      'Key metrics, performance optimization, and memory management insights.',
-      'Actionable recommendations for exam revision and technical interview prep.',
+      'Key concept and foundational theory points.',
+      'Core methods and implementation steps.',
     ],
     study_notes: [
-      { concept: 'System Architecture & Data Flow', frequency: 5, context: 'Foundational concepts governing execution pipeline.' },
-      { concept: 'Performance & Latency Optimization', frequency: 4, context: 'Techniques for minimizing response times and bottlenecks.' },
-      { concept: 'Scalability & Load Handling', frequency: 3, context: 'Design principles for handling high concurrent user demand.' },
+      { concept: 'Key Concept 1', frequency: 1, context: 'Extracted from submitted notes.' },
     ],
-    keywords: ['Architecture', 'Optimization', 'Scalability', 'Performance', 'Design Patterns'],
+    keywords: ['Study Notes', 'Key Concepts'],
     stats: {
       original_words: wordCount,
       summary_words: summaryLength,
-      compression_pct: Math.round(((wordCount - summaryLength) / wordCount) * 100),
-      read_time_saved_min: Math.max(1, Math.round((wordCount - summaryLength) / 200)),
+      compression_pct: wordCount ? Math.round(((wordCount - summaryLength) / wordCount) * 100) : 0,
+      read_time_saved_min: Math.max(0, Math.round((wordCount - summaryLength) / 200)),
     },
   }
 }
@@ -279,33 +230,32 @@ function getFallbackSummaryResponse(text: string, _mode: string, length: string)
 function getFallbackAnalyzeResponse(category: string, roleName: string, fileName?: string) {
   const catObj = FALLBACK_ROLES[category] || FALLBACK_ROLES['Software Engineering']
   const roleObj = catObj[roleName] || Object.values(catObj)[0]
-  const required = roleObj?.required_skills || ['React', 'TypeScript', 'JavaScript', 'HTML/CSS']
-  const found = required.slice(0, Math.ceil(required.length * 0.75))
-  const missing = required.slice(Math.ceil(required.length * 0.75))
+  const required = roleObj?.required_skills || ['React', 'TypeScript', 'JavaScript']
+  const found = required.slice(0, Math.ceil(required.length * 0.6))
+  const missing = required.slice(Math.ceil(required.length * 0.6))
 
   return {
-    ats_score: 85,
+    ats_score: 75,
     document_type: fileName?.endsWith('.docx') ? 'Word DOCX' : 'PDF Document',
     keyword_match: {
-      score: 80,
+      score: 70,
       found_skills: found,
-      missing_skills: missing.length ? missing : ['GraphQL', 'CI/CD'],
+      missing_skills: missing,
     },
-    format_score: 92,
+    format_score: 85,
     suggestions: [
-      `Add missing target skills: ${missing.join(', ') || 'GraphQL'} to boost keyword index.`,
-      'Quantify your key accomplishments with measurable impact metrics (e.g., +35% speed improvement).',
-      'Use clean standard headers (Experience, Education, Skills) for maximum parser readability.',
+      `Add missing target skills: ${missing.join(', ') || 'TypeScript'} to increase match rate.`,
+      'Include quantifiable metrics in experience bullet points.',
     ],
     required_skills: required,
     target_role: roleName || 'Frontend Engineer',
     target_category: category || 'Software Engineering',
     filename: fileName || 'Resume.pdf',
     section_scores: {
-      contact_info: 100,
-      work_experience: 88,
-      education: 92,
-      skills_section: 78,
+      contact_info: 90,
+      work_experience: 80,
+      education: 85,
+      skills_section: 70,
     },
   }
 }

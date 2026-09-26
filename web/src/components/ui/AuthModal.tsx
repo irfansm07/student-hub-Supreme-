@@ -17,9 +17,9 @@ export function AuthModal() {
         setIsSuccess(true)
         setTimeout(() => {
             login({
-                name: name || (mode === 'signup' ? 'Alex Rivers' : 'Student Member'),
+                name: name || 'Student Member',
                 email: email || 'student@university.edu',
-                major: major || 'Computer Science & AI',
+                major: major || 'Computer Science',
             })
             setIsSuccess(false)
         }, 700)
@@ -29,9 +29,9 @@ export function AuthModal() {
         setIsSuccess(true)
         setTimeout(() => {
             login({
-                name: 'Alex Rivers (Demo)',
-                email: 'alex.rivers@stanford.edu',
-                major: 'Computer Science & AI',
+                name: 'Guest User',
+                email: 'guest@student.hub',
+                major: 'Computer Science',
             })
             setIsSuccess(false)
         }, 500)
@@ -73,7 +73,7 @@ export function AuthModal() {
                             <ShieldCheck size={18} className="demo-icon" />
                             <div>
                                 <strong>Just testing?</strong>
-                                <span>Instant 1-Click Guest Login to unlock all features.</span>
+                                <span>Instant 1-Click Guest Access to unlock features.</span>
                             </div>
                         </div>
                         <button type="button" className="demo-btn" onClick={handleDemoLogin}>
@@ -105,7 +105,7 @@ export function AuthModal() {
                                             <User size={16} />
                                             <input
                                                 type="text"
-                                                placeholder="Alex Rivers"
+                                                placeholder="Enter full name"
                                                 value={name}
                                                 onChange={(e) => setName(e.target.value)}
                                                 required
@@ -118,7 +118,7 @@ export function AuthModal() {
                                         <div className="input-wrap">
                                             <GraduationCap size={16} />
                                             <select value={major} onChange={(e) => setMajor(e.target.value)}>
-                                                <option value="Computer Science & AI">Computer Science & AI</option>
+                                                <option value="Computer Science">Computer Science</option>
                                                 <option value="Data Science & Engineering">Data Science & Engineering</option>
                                                 <option value="Business & Finance">Business & Finance</option>
                                                 <option value="Mechanical Engineering">Mechanical Engineering</option>
