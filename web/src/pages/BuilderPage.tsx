@@ -527,8 +527,8 @@ export function BuilderPage() {
         kicker="Exact Overleaf LaTeX Studio"
         title="Exact Resume Templates with Real Previews"
         subtitle="Select from the exact Overleaf resume template photos you attached (Lewis Verstappen, Jack Sparrow, Jane Doe, Carl Johnson, ReCeIVe)."
-        color="#0ea5e9"
-        gradient="linear-gradient(135deg, #0ea5e9, #06b6d4)"
+        color="#005246"
+        gradient="#005246"
         steps={pageSteps}
         currentStep={currentStep}
       />
@@ -1154,8 +1154,8 @@ export function BuilderPage() {
                       type="button"
                       onClick={() => setTab('Profile')}
                       style={{
-                        background: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-                        color: '#ffffff',
+                        background: '#005246',
+                        color: '#FFF0CA',
                         border: 'none',
                         padding: '0.35rem 0.8rem',
                         borderRadius: '8px',

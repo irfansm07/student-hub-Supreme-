@@ -307,8 +307,8 @@ export function WorkspacePage() {
                 kicker="Academic & Productivity"
                 title="Notes Saver, Daily Checkpoint & Task Diary"
                 subtitle="Capture rich notes, organize daily focus targets, build habits, and keep a personal productivity diary."
-                color="#3b82f6"
-                gradient="linear-gradient(135deg, #3b82f6, #8b5cf6)"
+                color="#005246"
+                gradient="#005246"
                 steps={WORKSPACE_STEPS}
                 currentStep={currentStepIndex}
             />
@@ -319,8 +319,8 @@ export function WorkspacePage() {
                     onClick={() => setTab('notes')}
                     className="btn"
                     style={{
-                        background: tab === 'notes' ? 'linear-gradient(135deg, #3b82f6, #2563eb)' : 'var(--panel)',
-                        color: tab === 'notes' ? 'white' : 'var(--ink)',
+                        background: tab === 'notes' ? '#005246' : 'var(--panel)',
+                        color: tab === 'notes' ? '#FFF0CA' : 'var(--ink)',
                         fontWeight: 600,
                         display: 'flex',
                         alignItems: 'center',
@@ -334,8 +334,8 @@ export function WorkspacePage() {
                     onClick={() => setTab('checkpoint')}
                     className="btn"
                     style={{
-                        background: tab === 'checkpoint' ? 'linear-gradient(135deg, #10b981, #059669)' : 'var(--panel)',
-                        color: tab === 'checkpoint' ? 'white' : 'var(--ink)',
+                        background: tab === 'checkpoint' ? '#005246' : 'var(--panel)',
+                        color: tab === 'checkpoint' ? '#FFF0CA' : 'var(--ink)',
                         fontWeight: 600,
                         display: 'flex',
                         alignItems: 'center',
@@ -349,8 +349,8 @@ export function WorkspacePage() {
                     onClick={() => setTab('diary')}
                     className="btn"
                     style={{
-                        background: tab === 'diary' ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)' : 'var(--panel)',
-                        color: tab === 'diary' ? 'white' : 'var(--ink)',
+                        background: tab === 'diary' ? '#005246' : 'var(--panel)',
+                        color: tab === 'diary' ? '#FFF0CA' : 'var(--ink)',
                         fontWeight: 600,
                         display: 'flex',
                         alignItems: 'center',
@@ -399,7 +399,7 @@ export function WorkspacePage() {
                             </select>
                         </div>
 
-                        <Button onClick={openNewNoteModal} style={{ background: 'linear-gradient(135deg, #3b82f6, #2563eb)' }}>
+                        <Button onClick={openNewNoteModal} style={{ background: '#005246', color: '#FFF0CA' }}>
                             <Plus size={18} /> Create New Note
                         </Button>
                     </div>
@@ -530,19 +530,19 @@ export function WorkspacePage() {
             {tab === 'checkpoint' && (
                 <FadeIn>
                     <div className="grid grid-2" style={{ marginBottom: '1.5rem' }}>
-                        <Card style={{ background: 'linear-gradient(135deg, #0f172a, #1e293b)', color: 'white' }}>
+                        <Card style={{ background: 'var(--bg-elevated)', border: '1px solid var(--line)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                    <Calendar size={22} style={{ color: '#10b981' }} />
-                                    <h3 style={{ margin: 0, color: 'white' }}>Daily Target Focus</h3>
+                                    <Calendar size={22} style={{ color: 'var(--accent)' }} />
+                                    <h3 style={{ margin: 0 }}>Daily Target Focus</h3>
                                 </div>
-                                <input type="date" className="input" style={{ width: 'auto', background: '#334155', color: 'white', border: '1px solid #475569' }} value={targetDate} onChange={(e) => setTargetDate(e.target.value)} />
+                                <input type="date" className="input" style={{ width: 'auto' }} value={targetDate} onChange={(e) => setTargetDate(e.target.value)} />
                             </div>
 
                             <input
                                 type="text"
                                 className="input"
-                                style={{ marginTop: '1rem', background: '#1e293b', color: 'white', border: '1px solid #334155' }}
+                                style={{ marginTop: '1rem' }}
                                 placeholder="What is your main mission for today? (e.g. Master Resume Builder & Finish Backend)"
                                 value={checkpoint.target_focus}
                                 onChange={(e) => updateCheckpoint({ ...checkpoint, target_focus: e.target.value })}
@@ -550,12 +550,12 @@ export function WorkspacePage() {
 
                             {/* PROGRESS BAR */}
                             <div style={{ marginTop: '1.2rem' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.4rem', color: '#94a3b8' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.4rem', color: 'var(--ink-soft)' }}>
                                     <span>Daily Task Completion</span>
-                                    <strong style={{ color: '#10b981' }}>{completionPct}% Done</strong>
+                                    <strong style={{ color: 'var(--accent)' }}>{completionPct}% Done</strong>
                                 </div>
-                                <div style={{ background: '#334155', height: '10px', borderRadius: '999px', overflow: 'hidden' }}>
-                                    <div style={{ width: `${completionPct}%`, height: '100%', background: 'linear-gradient(90deg, #10b981, #059669)', transition: 'width 300ms ease' }} />
+                                <div style={{ background: 'var(--bg-muted)', height: '10px', borderRadius: '999px', overflow: 'hidden' }}>
+                                    <div style={{ width: `${completionPct}%`, height: '100%', background: '#005246', transition: 'width 300ms ease' }} />
                                 </div>
                             </div>
                         </Card>
@@ -627,7 +627,7 @@ export function WorkspacePage() {
                                 <option value="Low">🟢 Low</option>
                             </select>
 
-                            <Button onClick={addTask} style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}>
+                            <Button onClick={addTask} style={{ background: '#005246', color: '#FFF0CA' }}>
                                 <Plus size={18} /> Add Task
                             </Button>
                         </div>
@@ -727,7 +727,7 @@ export function WorkspacePage() {
                                 <input type="text" className="input" placeholder="Capstone, Win, Milestone, Learning" value={diaryTagsInput} onChange={(e) => setDiaryTagsInput(e.target.value)} />
                             </Field>
 
-                            <Button onClick={() => void handleSaveDiary()} style={{ marginTop: '1.2rem', background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' }}>
+                            <Button onClick={() => void handleSaveDiary()} style={{ marginTop: '1.2rem', background: '#005246', color: '#FFF0CA' }}>
                                 <Sparkles size={18} /> Save Personal Diary Entry
                             </Button>
                         </Card>

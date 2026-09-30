@@ -114,8 +114,8 @@ export function AnalyzerPage() {
         kicker="Career"
         title="See how an ATS would read your resume"
         subtitle="Pick the role you want, upload the file, and watch our real-time ATS engine scan every section."
-        color="#0ea5e9"
-        gradient="linear-gradient(135deg, #0ea5e9, #06b6d4)"
+        color="#005246"
+        gradient="#005246"
         steps={pageSteps}
         currentStep={currentStep}
       />
@@ -210,7 +210,7 @@ export function AnalyzerPage() {
                   style={{
                     height: '100%',
                     width: `${progress}%`,
-                    background: 'linear-gradient(90deg, #0ea5e9, #10b981)',
+                    background: '#005246',
                     transition: 'width 400ms ease',
                     borderRadius: '999px',
                   }}

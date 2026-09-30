@@ -37,7 +37,7 @@ export function GeminiKeyModal({ isOpen, onClose }: GeminiKeyModalProps) {
 
     setIsTesting(true)
     setStatusMsg('Validating with Google Gemini API...')
-    
+
     try {
       const isValid = await testGeminiKey(apiKey.trim())
       if (isValid) {
@@ -114,7 +114,7 @@ export function GeminiKeyModal({ isOpen, onClose }: GeminiKeyModalProps) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '0.8rem' }}>
           <div
             style={{
-              background: 'linear-gradient(135deg, #4f46e5, #7c3aed)',
+              background: '#005246',
               padding: '8px',
               borderRadius: '10px',
               color: 'white',
@@ -194,21 +194,20 @@ export function GeminiKeyModal({ isOpen, onClose }: GeminiKeyModalProps) {
                 testStatus === 'valid'
                   ? 'rgba(16, 185, 129, 0.12)'
                   : testStatus === 'invalid'
-                  ? 'rgba(239, 68, 68, 0.12)'
-                  : 'rgba(99, 102, 241, 0.1)',
+                    ? 'rgba(239, 68, 68, 0.12)'
+                    : 'rgba(99, 102, 241, 0.1)',
               color:
                 testStatus === 'valid'
                   ? '#059669'
                   : testStatus === 'invalid'
-                  ? '#dc2626'
-                  : '#4f46e5',
-              border: `1px solid ${
-                testStatus === 'valid'
+                    ? '#dc2626'
+                    : '#4f46e5',
+              border: `1px solid ${testStatus === 'valid'
                   ? 'rgba(16, 185, 129, 0.3)'
                   : testStatus === 'invalid'
-                  ? 'rgba(239, 68, 68, 0.3)'
-                  : 'rgba(99, 102, 241, 0.3)'
-              }`,
+                    ? 'rgba(239, 68, 68, 0.3)'
+                    : 'rgba(99, 102, 241, 0.3)'
+                }`,
             }}
           >
             {testStatus === 'valid' && <CheckCircle2 size={16} />}

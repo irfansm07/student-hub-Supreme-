@@ -54,8 +54,8 @@ export function DashboardPage() {
         kicker="Insights"
         title="A quiet view of your career progress"
         subtitle="ATS scores from resume reviews and the health of your application pipeline, all in one place. The more you use Aurelia, the richer this view becomes."
-        color="#6366f1"
-        gradient="linear-gradient(135deg, #6366f1, #8b5cf6)"
+        color="#005246"
+        gradient="#005246"
         steps={pageSteps}
         currentStep={currentStep}
       />

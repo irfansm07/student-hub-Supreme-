@@ -90,8 +90,8 @@ export function TrackerPage() {
         kicker="Career"
         title="Keep every application in one pipeline"
         subtitle="Add a role once, then move it from saved to offer. Your metrics update automatically from your real data."
-        color="#10b981"
-        gradient="linear-gradient(135deg, #10b981, #059669)"
+        color="#005246"
+        gradient="#005246"
         steps={pageSteps}
         currentStep={currentStep}
       />

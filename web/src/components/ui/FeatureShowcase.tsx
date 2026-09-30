@@ -45,9 +45,9 @@ const features: Feature[] = [
         title: 'Study Help AI',
         tagline: 'AI Academic Explainer, Quizzer, Exam Solver & Answer Evaluator',
         description: 'Master any academic concept with simple analogies, generate exam practice quizzes with answer keys, get step-by-step solutions to past papers, and evaluate your written answers.',
-        color: '#4f46e5',
-        gradient: 'linear-gradient(135deg, #4f46e5, #7c3aed)',
-        glowColor: 'rgba(79, 70, 229, 0.15)',
+        color: '#F3D25A',
+        gradient: '#005246',
+        glowColor: 'rgba(243, 210, 90, 0.18)',
         benefits: [
             'Intuitive concept breakdowns with analogies, common pitfalls & key takeaways',
             'Generates multi-format quizzes (MCQ, True/False, Fill-ins) with Answer Keys',
@@ -85,9 +85,9 @@ const features: Feature[] = [
         title: 'Study Summarizer Studio',
         tagline: 'From hours of dry reading to minutes of total clarity',
         description: 'Drop any lecture PDF, paste raw notes, or upload chapter texts. Our AI distills long documents into executive summaries, key takeaways, flashcard concepts, and highlighted terms.',
-        color: '#6366f1',
-        gradient: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-        glowColor: 'rgba(99, 102, 241, 0.15)',
+        color: '#005246',
+        gradient: '#AF9C68',
+        glowColor: 'rgba(0, 82, 70, 0.18)',
         benefits: [
             'Saves 60–80% of your textbook & lecture reading time',
             'Auto-extracts flashcard-style concepts for quick exam revision',
@@ -125,9 +125,9 @@ const features: Feature[] = [
         title: 'Resume Studio & ATS Analyzer',
         tagline: 'Score, fix, and rebuild your resume for 95%+ ATS pass rates',
         description: 'First, check how ATS systems filter your resume against target job descriptions. Then, use our guided builder to create a clean, professional Word resume.',
-        color: '#0ea5e9',
-        gradient: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-        glowColor: 'rgba(14, 165, 233, 0.15)',
+        color: '#AF9C68',
+        gradient: '#005246',
+        glowColor: 'rgba(175, 156, 104, 0.18)',
         benefits: [
             'Instant ATS compatibility score & missing skill detector',
             'Creates clean, downloadable Microsoft Word (.docx) resumes',
@@ -165,9 +165,9 @@ const features: Feature[] = [
         title: 'Job Tracker & Search Studio',
         tagline: 'Search multi-portal jobs & track applications from saved to hired',
         description: 'Search internships across LinkedIn, Naukri, and Indeed from one unified search bar. Save jobs, track application stages on a Kanban board, and view career analytics.',
-        color: '#10b981',
-        gradient: 'linear-gradient(135deg, #10b981, #059669)',
-        glowColor: 'rgba(16, 185, 129, 0.15)',
+        color: '#F3D25A',
+        gradient: '#F3D25A',
+        glowColor: 'rgba(243, 210, 90, 0.18)',
         benefits: [
             'Search listings across LinkedIn, Naukri, & Indeed at once',
             'Visual Kanban pipeline (Saved → Applied → Interviewing → Offer)',
@@ -257,17 +257,30 @@ function SplashScreen({ onEnter }: { onEnter: () => void }) {
                     speed={18}
                     distance={10.5}
                     burstRef={burstRef}
-                    baseColor="#22396F"
-                    accentColor="#FCF1D0"
+                    baseColor="#005246"
+                    accentColor="#F3D25A"
                 />
             </div>
 
             {/* Feature labels — synced with burst animation */}
             <div className="pieburst-labels-ring" ref={labelsRef}>
                 {SECTOR_FEATURES.map((feat, i) => {
+                    const total = SECTOR_FEATURES.length
+                    const angle = (i / total) * 2 * Math.PI - Math.PI / 2
+                    const radius = 50
+                    const x = 50 + radius * Math.cos(angle)
+                    const y = 50 + radius * Math.sin(angle)
                     const Icon = feat.icon
                     return (
-                        <div key={feat.label} className={`pieburst-sector-label sector-pos-${i}`}>
+                        <div
+                            key={feat.label}
+                            className="pieburst-sector-label"
+                            style={{
+                                left: `${x.toFixed(2)}%`,
+                                top: `${y.toFixed(2)}%`,
+                                transform: 'translate(-50%, -50%)',
+                            }}
+                        >
                             <div className="sector-label-icon">
                                 <Icon size={16} />
                             </div>
@@ -350,9 +363,9 @@ export function FeatureShowcase() {
             >
                 <div className="hero-waves-bg">
                     <GradientWaves
-                        horizonColor="#5227FF"
-                        waveColor="#FF9FFC"
-                        crestColor="#FFFFFF"
+                        horizonColor="#005246"
+                        waveColor="#F3D25A"
+                        crestColor="#FFF0CA"
                         speed={0.35}
                         amplitude={1.8}
                         waveScale={0.6}

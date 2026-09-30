@@ -62,8 +62,8 @@ export function JobsPage() {
         kicker="Career"
         title="Search internships and jobs in one place"
         subtitle="Start from a role and city. Aurelia opens the right listings across LinkedIn, Naukri, Indeed, and more — all from one search."
-        color="#10b981"
-        gradient="linear-gradient(135deg, #10b981, #059669)"
+        color="#005246"
+        gradient="#005246"
         steps={pageSteps}
         currentStep={currentStep}
       />

@@ -159,8 +159,8 @@ export function StudyHelpAIPage() {
         kicker="Academic AI"
         title="Study Help AI"
         subtitle="Your smart academic companion: explain complex topics, generate self-assessment quizzes, solve exam questions, and grade practice answers in real-time."
-        color="#6366f1"
-        gradient="linear-gradient(135deg, #4f46e5, #7c3aed)"
+        color="#005246"
+        gradient="#005246"
         steps={pageSteps}
         currentStep={currentStep}
       />

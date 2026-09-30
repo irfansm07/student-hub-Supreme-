@@ -82,8 +82,8 @@ export function SummarizerPage() {
         kicker="Academic"
         title="Turn dense notes into a study brief"
         subtitle="Upload a lecture, paste a chapter, then choose the format you need. Your AI-generated summary, bullets, and flashcard concepts appear instantly."
-        color="#6366f1"
-        gradient="linear-gradient(135deg, #6366f1, #8b5cf6)"
+        color="#005246"
+        gradient="#005246"
         steps={pageSteps}
         currentStep={currentStep}
       />

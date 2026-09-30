@@ -77,8 +77,8 @@
 
 /* Quick Demo Box */
 .auth-demo-box {
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(16, 185, 129, 0.08));
-    border: 1.5px dashed rgba(99, 102, 241, 0.3);
+    background: var(--bg-muted);
+    border: 1.5px dashed var(--accent);
     border-radius: 16px;
     padding: 0.9rem;
     display: flex;
@@ -207,14 +207,14 @@
     width: 100%;
     padding: 0.75rem;
     border-radius: 14px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: white;
+    background: #005246;
+    color: #FFF0CA;
     font-weight: 700;
     font-size: 0.9rem;
     border: none;
     cursor: pointer;
     margin-top: 0.4rem;
-    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 14px rgba(0, 82, 70, 0.25);
     transition: transform 180ms ease;
 }
 

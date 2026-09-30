@@ -1,19 +1,19 @@
 :root {
-  --bg: #f3f1ea;
-  --bg-elevated: #fffcf7;
-  --bg-muted: #ebe7dc;
-  --ink: #16141c;
-  --ink-soft: #4b4658;
-  --ink-muted: #7a7486;
-  --line: rgba(22, 20, 28, 0.09);
-  --accent: #4338ca;
-  --accent-2: #0f766e;
-  --accent-soft: #eceaff;
-  --accent-2-soft: #e6f7f3;
+  --bg: #FFF0CA;
+  --bg-elevated: #FFFFFF;
+  --bg-muted: #F7E9C4;
+  --ink: #003B33;
+  --ink-soft: #385E55;
+  --ink-muted: #AF9C68;
+  --line: rgba(0, 82, 70, 0.14);
+  --accent: #005246;
+  --accent-2: #F3D25A;
+  --accent-soft: rgba(0, 82, 70, 0.12);
+  --accent-2-soft: rgba(243, 210, 90, 0.25);
   --danger: #be123c;
   --warning: #b45309;
-  --success: #047857;
-  --shadow: 0 22px 50px rgba(49, 41, 28, 0.08);
+  --success: #005246;
+  --shadow: 0 22px 50px rgba(0, 82, 70, 0.12);
   --radius: 20px;
   --sidebar: 288px;
   --sans: "Plus Jakarta Sans", "Segoe UI", sans-serif;
@@ -22,18 +22,18 @@
 }
 
 html.dark {
-  --bg: #0c0d14;
-  --bg-elevated: #151724;
-  --bg-muted: #1c1f31;
-  --ink: #f6f4ee;
-  --ink-soft: #c9c4d6;
-  --ink-muted: #938da3;
-  --line: rgba(246, 244, 238, 0.1);
-  --accent: #a5b4fc;
-  --accent-2: #5eead4;
-  --accent-soft: rgba(165, 180, 252, 0.12);
-  --accent-2-soft: rgba(94, 234, 212, 0.1);
-  --shadow: 0 22px 50px rgba(0, 0, 0, 0.38);
+  --bg: #002923;
+  --bg-elevated: #005246;
+  --bg-muted: #003D34;
+  --ink: #FFF0CA;
+  --ink-soft: #F3D25A;
+  --ink-muted: #AF9C68;
+  --line: rgba(243, 210, 90, 0.22);
+  --accent: #F3D25A;
+  --accent-2: #AF9C68;
+  --accent-soft: rgba(243, 210, 90, 0.18);
+  --accent-2-soft: rgba(0, 82, 70, 0.45);
+  --shadow: 0 22px 50px rgba(0, 0, 0, 0.5);
   color-scheme: dark;
 }
 
@@ -50,10 +50,7 @@ body,
 body {
   margin: 0;
   font-family: var(--sans);
-  background:
-    radial-gradient(900px 420px at 100% -8%, rgba(67, 56, 202, 0.14), transparent 50%),
-    radial-gradient(720px 380px at -8% 12%, rgba(15, 118, 110, 0.12), transparent 46%),
-    var(--bg);
+  background: var(--bg);
   color: var(--ink);
 }
 
@@ -120,9 +117,9 @@ kbd {
   border-radius: 14px;
   display: grid;
   place-items: center;
-  background: linear-gradient(145deg, #312e81, #4338ca 55%, #0f766e);
-  color: white;
-  box-shadow: 0 12px 24px rgba(67, 56, 202, 0.28);
+  background: #005246;
+  color: #FFF0CA;
+  box-shadow: 0 8px 18px rgba(0, 82, 70, 0.25);
 }
 
 .brand h1 {
@@ -314,10 +311,8 @@ kbd {
   gap: 1.4rem;
   padding: 2.1rem;
   border-radius: 32px;
-  background:
-    linear-gradient(135deg, rgba(49, 46, 129, 0.96), rgba(15, 118, 110, 0.86)),
-    var(--accent);
-  color: white;
+  background: #005246;
+  color: #FFF0CA;
   box-shadow: var(--shadow);
 }
 
@@ -351,7 +346,7 @@ kbd {
   right: -50px;
   bottom: -90px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.26), transparent 65%);
+  background: rgba(255, 255, 255, 0.08);
   animation: float 7s ease-in-out infinite;
 }
 
@@ -686,7 +681,10 @@ textarea {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: conic-gradient(var(--accent) calc(var(--p) * 1%), var(--bg-muted) 0);
+  border: 8px solid var(--bg-muted);
+  border-top-color: var(--accent);
+  border-right-color: var(--accent);
+  background: var(--bg-elevated);
 }
 
 .score-ring span {
@@ -797,7 +795,7 @@ textarea {
   height: 54px;
   border-radius: 16px;
   margin: 0 auto 0.8rem;
-  background: linear-gradient(135deg, var(--accent-soft), var(--accent-2-soft));
+  background: var(--accent-soft);
 }
 
 .empty h3 {
@@ -901,9 +899,8 @@ textarea {
 .skeleton {
   height: 12px;
   border-radius: 99px;
-  background: linear-gradient(90deg, var(--bg-muted), var(--bg-elevated), var(--bg-muted));
-  background-size: 200% 100%;
-  animation: shine 1.4s infinite;
+  background: var(--bg-muted);
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
 .skeleton-stack {
@@ -962,7 +959,7 @@ textarea {
 .gph-banner__glow {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--gph-color) 8%, transparent), transparent 60%);
+  background: var(--bg-muted);
   pointer-events: none;
 }
 
@@ -972,8 +969,8 @@ textarea {
   border-radius: 16px;
   display: grid;
   place-items: center;
-  background: var(--gph-gradient);
-  color: white;
+  background: var(--gph-color);
+  color: #FFF0CA;
   box-shadow: 0 8px 20px color-mix(in srgb, var(--gph-color) 25%, transparent);
   flex-shrink: 0;
   position: relative;
